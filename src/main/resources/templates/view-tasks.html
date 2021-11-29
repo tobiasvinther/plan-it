@@ -94,14 +94,110 @@
                         </td>
                         <td th:text="${task.getDeadline()}"></td>
                         <td>
-                            <a class="btn btn-secondary flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task" href=""><i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i></a>
-                            <a class="btn btn-danger flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task" href=""><i class="bi bi-trash" style="font-size: 1rem; color: white;"></i></a>
+                            <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href="">
+                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
+                                <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
+                            </a>
+                            <!-- delete button opens deleteTaskModal -->
+                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" href="">
+                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
+                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-success">Add task</button>
+
+        <!-- editTaskModal -->
+        <!-- change placeholders to hold values of selected task -->
+        <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editTaskModalLabel">Edit task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="editTaskName" class="form-label">Task title</label>
+                            <input type="text" class="form-control" id="editTaskName" placeholder="Add a title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskHours" class="form-label">Estimated hours</label>
+                            <input type="number" class="form-control" id="editTaskHours" placeholder="Hours to complete the task">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskDeadline" class="form-label">Deadline</label>
+                            <input type="date" class="form-control" id="editTaskDeadline">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- delete task modal -->
+        <div class="modal" id="deleteTaskModal" tabindex="-1" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 text-center">
+                        <h5 class="modal-title w-100" id="deleteTaskModalLabel">Delete task?</h5>
+                        <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                    </div>
+
+                    <div class="modal-footer border-0 justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- add task -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">Add task</button>
+
+        <!-- addTaskModal -->
+        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addTaskModalLabel">New task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newTaskName" class="form-label">Task title</label>
+                            <input type="text" class="form-control" id="newTaskName" placeholder="Add a title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTaskDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTaskHours" class="form-label">Estimated hours</label>
+                            <input type="number" class="form-control" id="newTaskHours" placeholder="Hours to complete the task">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTaskDeadline" class="form-label">Deadline</label>
+                            <input type="date" class="form-control" id="newTaskDeadline">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
