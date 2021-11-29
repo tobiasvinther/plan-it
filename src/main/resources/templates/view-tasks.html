@@ -93,7 +93,10 @@
                             </select>
                         </td>
                         <td th:text="${task.getDeadline()}"></td>
-                        <td><a class="btn btn-secondary flex-end" href=""><i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i></a></td>
+                        <td>
+                            <a class="btn btn-secondary flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task" href=""><i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i></a>
+                            <a class="btn btn-danger flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task" href=""><i class="bi bi-trash" style="font-size: 1rem; color: white;"></i></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
