@@ -66,6 +66,15 @@
         </div>
     </div>
 
+    <!--total hours-->
+    <div class="container pb-1" >
+        <div class="d-flex flex-row justify-content-between">
+            <h5>Total tasks: <span th:text="${taskList.size()}"></span></h5>
+            <h5>Total hours: <span th:text="${totalHours}"></span></h5>
+            <h5>Completion : <span th:text="${completionPercentage}"></span>%</h5>
+        </div>
+    </div>
+
     <!-- Task table -->
     <div class="container">
         <div >
@@ -86,8 +95,9 @@
                         <td th:text="${task.getDescription()}"></td>
                         <td th:text="${task.getHours()}"></td>
                         <td >
+                            <!--refactor this so the default selected option is the one from each task-->
                             <select class="form-select" aria-label="Default select example">
-                                <option th:value="1" selected>Pending</option>
+                                <option th:value="1">Pending</option>
                                 <option th:value="2">In progress</option>
                                 <option th:value="3">Done</option>
                             </select>
