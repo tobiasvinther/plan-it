@@ -4,10 +4,9 @@ import com.kea.planit.repositories.TaskRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import javax.servlet.http.HttpSession;
 
 @Controller
-public class TaskController {
+public class MainController {
 
     @GetMapping("/")
     public String index(){
@@ -19,6 +18,11 @@ public class TaskController {
         TaskRepository taskRepository = new TaskRepository();
         taskModel.addAttribute("taskList", taskRepository.getTaskList());
         return "view-tasks";
+    }
+
+    @GetMapping("/sign-up")
+    public String signUp(){
+        return "sign-up";
     }
 
 
