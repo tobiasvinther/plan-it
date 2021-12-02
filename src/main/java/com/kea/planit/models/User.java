@@ -12,6 +12,7 @@ public class User {
     private static int idcounter = 0;
 
    public User(){};
+
     public User(String name, String email, String password) {
         id= idcounter+1;
         idcounter++;
