@@ -2,12 +2,15 @@ package com.kea.planit.controllers;
 
 import com.kea.planit.repositories.ProjectRepository;
 import com.kea.planit.repositories.TaskRepository;
+import com.kea.planit.services.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ProjectController {
+
+    ProjectService projectService = new ProjectService();
 
     @GetMapping("/")
     public String index() {
@@ -19,5 +22,6 @@ public class ProjectController {
         projectModel.addAttribute("projectList", projectRepository.getProjectList());
         return "view-project";
     }
+
 
 }
