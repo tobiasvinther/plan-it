@@ -44,8 +44,9 @@
     </nav>
 
     <!-- Project table -->
-    <div class="container">
+    <div class="container mt-5 py-5">
         <div>
+            <h1>My projects</h1>
             <table id="taskTable" class="table table-hover table-bordered table-light">
                 <thead>
                 <tr>
@@ -63,30 +64,31 @@
                     <td th:text="${project.getDescription}"></td>
                     <td th:text="${project.getHoursInAll}"></td>
                     <td >
-                        <!--refactor this so the default selected option is the one from each task-->
+                        <!--Select project status-->
                         <select class="form-select" aria-label="Default select example">
-                            <option th:value="1">Done</option>
-                            <option th:value="2">Done</option>
+                            <option th:value="1">Pending</option>
+                            <option th:value="2">In progress</option>
                             <option th:value="3">Done</option>
                         </select>
                     </td>
                     <td th:text="${project.getDeadline}"></td>
                     <td>
+                        <!-- edit button opens editProjectModal -->
                         <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href="">
-                            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
+                            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit project"></span>
                             <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                         </a>
-                        <!-- delete button opens deleteTaskModal -->
+                        <!-- delete button opens deleteProjectModal -->
                         <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" href="">
                             <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
-                            <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                            <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete project"></i>
                         </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-success">Add task</button>
+        <button class="btn btn-success">Add project</button>
     </div>
 </body>
 </html>
