@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ProjectRepository {
 
     //Dummi class
-    public ArrayList<Project> getProjectList(){
+    public static ArrayList<Project> getProjectList(){
         ArrayList<Project> projectList = new ArrayList<>();
         Project project1 = new Project(1,"Project 1", "Nice project1", 36,"Done", LocalDate.now());
         Project project2 = new Project(2,"Project 2", "Nice project2", 24,"Done", LocalDate.now());

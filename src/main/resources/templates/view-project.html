@@ -57,8 +57,36 @@
                     <td></td>
                 </tr>
                 </thead>
+                <tbody>
+                <tr th:each="project : ${projectList}">
+                    <td th:text="${project.getName}"></td>
+                    <td th:text="${project.getDescription}"></td>
+                    <td th:text="${project.getHoursInAll}"></td>
+                    <td >
+                        <!--refactor this so the default selected option is the one from each task-->
+                        <select class="form-select" aria-label="Default select example">
+                            <option th:value="1">Done</option>
+                            <option th:value="2">Done</option>
+                            <option th:value="3">Done</option>
+                        </select>
+                    </td>
+                    <td th:text="${project.getDeadline}"></td>
+                    <td>
+                        <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href="">
+                            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
+                            <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
+                        </a>
+                        <!-- delete button opens deleteTaskModal -->
+                        <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" href="">
+                            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
+                            <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
             </table>
         </div>
+        <button class="btn btn-success">Add task</button>
     </div>
 </body>
 </html>
