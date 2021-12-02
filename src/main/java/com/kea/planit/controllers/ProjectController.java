@@ -21,7 +21,8 @@ public class ProjectController {
         ProjectRepository projectRepository = new ProjectRepository();
         projectModel.addAttribute("projectList", projectRepository.getProjectList());
 
-
+        //Add total hour calculation to project
+        projectModel.addAttribute("totalHours", projectService.calculateHours(projectRepository.getProjectList()));
         return "view-project";
 
     }
