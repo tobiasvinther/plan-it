@@ -6,6 +6,7 @@ import com.kea.planit.services.SignUPServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class SignUpController {
@@ -18,14 +19,15 @@ public class SignUpController {
     }
 
     @PostMapping("/sign-up")
-    public String userSignUp(@ModelAttribute("signUpForm") User user){
+    public String userSignUp(@ModelAttribute("signUpForm") User user, RedirectAttributes redirAttrs){
         System.out.println("Printing object: "+ user);
         if(sus.isUserValid(user)){
             UserRepository.getInstance().addUser(user);
             System.out.println(UserRepository.getInstance().getAllUsers().toString());
             return"success";
         }
+        redirAttrs.addFlashAttribute("error", "User already exists");
         System.out.println("User already exists");
-        return"sign-up";
+        return"redirect:/sign-up";
     }
 }
