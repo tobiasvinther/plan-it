@@ -20,7 +20,10 @@ public class ProjectController {
     public String viewProject(Model projectModel){
         ProjectRepository projectRepository = new ProjectRepository();
         projectModel.addAttribute("projectList", projectRepository.getProjectList());
+
+
         return "view-project";
+
     }
 
 
