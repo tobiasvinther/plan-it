@@ -16,7 +16,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-primary navbar-dark py-3 fixed-top">
     <div class="container">
-        <a href="#" class="navbar-brand">PLAN-IT</a>
+        <a href="/" class="navbar-brand">PLAN-IT</a>
 
         <button
                 class="navbar-toggler"
@@ -46,21 +46,24 @@
         <div class="container mt-5 py-5">
             <h1>Sign up</h1>
             <div id="form-wrapper">
-                <form id="sign-up-form" method="POST" action="/test">
+                <form id="sign-up-form" method="POST" th:action="@{/sign-up}" th:object="${signUpForm}" >
 
                     <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input name="test-input" id="name" type="text" class="form-control">
+                    <input name="test-input" id="name" th:field="*{name}"
+                           type="text" class="form-control">
                     </div>
 
                     <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input name="test-input" id="email" type="text" class="form-control">
+                    <input name="test-input" id="email" th:field="*{email}"
+                           type="text" class="form-control">
                     </div>
 
                     <div class="mb-3">
                     <label for="password" class="form-label">password</label>
-                    <input name="test-input" id="password" type="text" class="form-control">
+                    <input name="test-input" id="password" th:field="*{password}"
+                           type="text" class="form-control">
                     </div>
 
                     <div class="mb-3">
@@ -68,7 +71,7 @@
                     <input name="test-input" id="confirmpassword" type="text" class="form-control">
                      </div>
 
-                    <input type="submit" class="btn btn-primary">
+                    <input type="submit" class="btn btn-primary" th:>
                 </form>
             </div>
         </div>

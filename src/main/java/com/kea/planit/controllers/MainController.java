@@ -20,11 +20,4 @@ public class MainController {
         return "view-tasks";
     }
 
-    @GetMapping("/sign-up")
-    public String signUp(){
-        return "sign-up";
-    }
-
-
-
 }
