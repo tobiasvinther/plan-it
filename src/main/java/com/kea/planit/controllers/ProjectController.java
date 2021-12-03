@@ -1,5 +1,6 @@
 package com.kea.planit.controllers;
 
+import com.kea.planit.models.Project;
 import com.kea.planit.repositories.ProjectRepository;
 import com.kea.planit.repositories.TaskRepository;
 import com.kea.planit.services.ProjectService;
@@ -7,6 +8,8 @@ import com.kea.planit.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -23,7 +26,12 @@ public class ProjectController {
     }
     @GetMapping("/view-project")
     public String viewProject(Model projectModel){
-        projectModel.addAttribute("projectList", projectRepository.getProjectList());
+        ArrayList<Project> projects = projectRepository.getProjectList();
+        for (Project project: projects) {
+            project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList()));
+        }
+
+        projectModel.addAttribute("projectList", projects);
         projectModel.addAttribute("taskList", taskRepository.getTaskList());
         //Add total hour calculation to all projects.
         projectModel.addAttribute("totalProjectsHours", projectService.calculateProjectHours(projectRepository.getProjectList()));
