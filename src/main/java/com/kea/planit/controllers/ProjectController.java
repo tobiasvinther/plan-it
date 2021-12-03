@@ -8,6 +8,7 @@ import com.kea.planit.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 
@@ -28,18 +29,13 @@ public class ProjectController {
     public String viewProject(Model projectModel){
         ArrayList<Project> projects = projectRepository.getProjectList();
         for (Project project: projects) {
-            project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList()));
+            project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList(project.getId())));
         }
 
         projectModel.addAttribute("projectList", projects);
-        projectModel.addAttribute("taskList", taskRepository.getTaskList());
-        //Add total hour calculation to all projects.
-        projectModel.addAttribute("totalProjectsHours", projectService.calculateProjectHours(projectRepository.getProjectList()));
-        //Add total hour calculation to each projects.
-        projectModel.addAttribute("totalTaskHours", taskService.calculateTaskHours(taskRepository.getTaskList()));
+        //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));
         return "view-project";
 
     }
-
 
 }
