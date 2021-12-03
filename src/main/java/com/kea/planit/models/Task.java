@@ -11,14 +11,16 @@ public class Task {
     private int hours;
     private String status;
     private LocalDate deadline;
+    private int projectId;
 
-    public Task(int id, String name, String description, int hours, String status, LocalDate deadline) {
+    public Task(int id, String name, String description, int hours, String status, LocalDate deadline, int projectId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
         this.status = status;
         this.deadline = deadline;
+        this.projectId = projectId;
     }
 
     public int getId() {
@@ -67,5 +69,13 @@ public class Task {
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
