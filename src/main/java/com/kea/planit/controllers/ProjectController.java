@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProjectController {
 
+    TaskRepository taskRepository = new TaskRepository();
+    ProjectRepository projectRepository = new ProjectRepository();
     ProjectService projectService = new ProjectService();
 
     @GetMapping("/")
@@ -18,11 +20,12 @@ public class ProjectController {
     }
     @GetMapping("/view-project")
     public String viewProject(Model projectModel){
-        ProjectRepository projectRepository = new ProjectRepository();
         projectModel.addAttribute("projectList", projectRepository.getProjectList());
+        projectModel.addAttribute("taskList", taskRepository.getTaskList());
+        //Add total hour calculation to all projects.
+        projectModel.addAttribute("totalHours", projectService.calculateProjectHours(projectRepository.getProjectList()));
+        //Add total hour calculation to each projects.
 
-        //Add total hour calculation to project
-        projectModel.addAttribute("totalHours", projectService.calculateHours(projectRepository.getProjectList()));
         return "view-project";
 
     }

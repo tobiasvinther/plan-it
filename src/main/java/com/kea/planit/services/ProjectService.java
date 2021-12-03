@@ -6,7 +6,7 @@ import com.kea.planit.models.Task;
 import java.util.ArrayList;
 
 public class ProjectService {
-    public int calculateHours(ArrayList<Project> projectList) {
+    public int calculateProjectHours(ArrayList<Project> projectList) {
         int totalHours = 0;
         for (Project project : projectList) {
             totalHours += project.getHoursInAll();
