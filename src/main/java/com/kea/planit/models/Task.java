@@ -3,6 +3,8 @@ package com.kea.planit.models;
 import java.time.LocalDate;
 import java.util.Date;
 
+//Author: Tobias Vinther
+
 public class Task {
 
     private int id;

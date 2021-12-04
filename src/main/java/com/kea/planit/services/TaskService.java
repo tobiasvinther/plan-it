@@ -3,6 +3,8 @@ package com.kea.planit.services;
 import com.kea.planit.models.Task;
 import java.util.ArrayList;
 
+//Author: Tobias Vinther
+
 public class TaskService {
 
     public int calculateHours(ArrayList<Task> taskList) {

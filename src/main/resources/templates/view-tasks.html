@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Task List</title>
 </head>
-
+<!-- Author: Tobias Vinther -->
 <!-- perhaps move to a css -->
 <style>
     th {
@@ -176,36 +176,38 @@
 
         <!-- addTaskModal -->
         <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addTaskModalLabel">New task</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="newTaskName" class="form-label">Task title</label>
-                            <input type="text" class="form-control" id="newTaskName" placeholder="Add a title">
+            <form id="addWish" method="POST" action="/view-tasks">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addTaskModalLabel">New task</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="mb-3">
-                            <label for="newTaskDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="newTaskName" class="form-label">Task title</label>
+                                <input type="text" class="form-control" id="newTaskName" placeholder="Add a title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskHours" class="form-label">Estimated hours</label>
+                                <input type="number" class="form-control" id="newTaskHours" placeholder="Hours to complete the task">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" id="newTaskDeadline">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="newTaskHours" class="form-label">Estimated hours</label>
-                            <input type="number" class="form-control" id="newTaskHours" placeholder="Hours to complete the task">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Save</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="newTaskDeadline" class="form-label">Deadline</label>
-                            <input type="date" class="form-control" id="newTaskDeadline">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success">Save</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
 
     </div>
