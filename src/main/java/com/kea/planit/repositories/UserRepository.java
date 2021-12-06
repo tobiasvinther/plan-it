@@ -27,4 +27,12 @@ public class UserRepository {
         users.add(u);
     }
 
+    public User findByEmail(String email){
+        for(User u: UserRepository.getInstance().getAllUsers()){
+            if(u.getEmail().equals(email)){
+                return u;
+            }
+        }
+        return null;
+    }
 }

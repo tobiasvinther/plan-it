@@ -21,7 +21,7 @@ public class SignUpController {
     @PostMapping("/sign-up")
     public String userSignUp(@ModelAttribute("signUpForm") User user, RedirectAttributes redirAttrs){
         System.out.println("Printing object: "+ user);
-        if(sus.isUserValid(user)){
+        if(!sus.isUserValid(user)){
             UserRepository.getInstance().addUser(user);
             System.out.println(UserRepository.getInstance().getAllUsers().toString());
             return"success";
