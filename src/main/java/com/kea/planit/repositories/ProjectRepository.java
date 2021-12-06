@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ProjectRepository {
 
     //private static Object Date;
-    private ProjectRepository projectRepository = new ProjectRepository();
+    //private ProjectRepository projectRepository = new ProjectRepository();
 
     //Dummi class
     /*public static ArrayList<Project> getProjectList(){
