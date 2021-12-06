@@ -14,7 +14,7 @@ import java.util.Properties;
 public class DBconnector {
 
     private static String url = System.getenv("db.url");
-    private static String username = System.getenv("db.username");
+    private static String user = System.getenv("db.username");
     private static String password = System.getenv("db.password");
     private static Connection connection = null;
 
@@ -30,7 +30,7 @@ public class DBconnector {
             Properties properties = new Properties();
             properties.load(stream);
             url = properties.getProperty("db.url");
-            username = properties.getProperty("db.username");
+            user = properties.getProperty("db.username");
             password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, username, password);
 
