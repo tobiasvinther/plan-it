@@ -12,15 +12,17 @@ public class Task {
     private String description;
     private int hours;
     private String status;
-    private LocalDate deadline;
+    private Date deadline;
+    private int taskOwner;
 
-    public Task(int id, String name, String description, int hours, String status, LocalDate deadline) {
+    public Task(int id, String name, String description, int hours, String status, Date deadline, int taskOwner) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
         this.status = status;
         this.deadline = deadline;
+        this.taskOwner = taskOwner;
     }
 
     public int getId() {
@@ -63,11 +65,19 @@ public class Task {
         this.status = status;
     }
 
-    public LocalDate getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public int getTaskOwner() {
+        return taskOwner;
+    }
+
+    public void setTaskOwner(int taskOwner) {
+        this.taskOwner = taskOwner;
     }
 }

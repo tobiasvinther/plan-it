@@ -23,16 +23,17 @@ public class TaskController {
     @GetMapping("/view-tasks")
     public String viewTasks(Model taskModel){
         TaskRepository taskRepository = new TaskRepository();
-        taskRepository.populateTaskList();
-        taskModel.addAttribute("taskList", taskRepository.getTaskList());
+        //taskRepository.populateTaskList();
+        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(1)); //hardcoded for testing
 
         //add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
-        taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskList()));
-        taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskList()));
+        taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
+        taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
         return "view-tasks";
     }
 
+    /*
     @PostMapping(value = "/view-tasks")
     public String addTask(WebRequest userInput) {
 
@@ -53,6 +54,8 @@ public class TaskController {
 
         return "redirect:/view-tasks";
     }
+
+     */
 
 
 }
