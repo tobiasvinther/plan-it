@@ -11,14 +11,16 @@ public class Project {
     private int hoursInAll;
     private String status;
     private Date deadline;
+    private int projectOwner;
 
-    public Project(int id, String name, String description, int hoursInAll, String status, Date deadline) {
+    public Project(int id, String name, String description, int hoursInAll, String status, Date deadline, int projectOwner) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hoursInAll = hoursInAll;
         this.status = status;
         this.deadline = deadline;
+        this.projectOwner = projectOwner;
     }
 
     public int getId() {
@@ -67,5 +69,13 @@ public class Project {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public int getProjectOwner() {
+        return projectOwner;
+    }
+
+    public void setProjectOwner(int projectOwner) {
+        this.projectOwner = projectOwner;
     }
 }

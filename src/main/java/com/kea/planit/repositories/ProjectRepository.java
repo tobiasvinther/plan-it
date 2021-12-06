@@ -35,7 +35,8 @@ public class ProjectRepository {
                         rs.getString("description"),
                         rs.getInt("hoursinall"),
                         rs.getString("status"),
-                        rs.getDate("deadline")
+                        rs.getDate("deadline"),
+                        rs.getInt("project_owner")
                 );
                 allProjectList.add(project);
             }

@@ -12,8 +12,9 @@ public class Task {
     private String status;
     private LocalDate deadline;
     private int projectId;
+    private int taskOwner;
 
-    public Task(int id, String name, String description, int hours, String status, LocalDate deadline, int projectId) {
+    public Task(int id, String name, String description, int hours, String status, LocalDate deadline, int projectId, int taskOwner) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -21,6 +22,7 @@ public class Task {
         this.status = status;
         this.deadline = deadline;
         this.projectId = projectId;
+        this.taskOwner = taskOwner;
     }
 
     public int getId() {
@@ -77,5 +79,13 @@ public class Task {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    public int getTaskOwner() {
+        return taskOwner;
+    }
+
+    public void setTaskOwner(int taskOwner) {
+        this.taskOwner = taskOwner;
     }
 }
