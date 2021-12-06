@@ -33,15 +33,15 @@ public class ProjectRepository {
             ResultSet rs = ppst.executeQuery();
             ArrayList<Project> allProjectList = new ArrayList<>();
             while (rs.next()) {
-                int projectid = rs.getInt(1);
-                String projectname = rs.getString(2);
-                String projectdescription = rs.getString(3);
-                int projecthoursinall = rs.getInt(4);
-                String projectstatus = rs.getString(5);
-                Date projectdeadline = rs.getDate(6);
-                Project projectList = new Project(projectid, projectname, projectdescription, projecthoursinall, projectstatus, projectdeadline);
-                allProjectList.add(projectList);
-                System.out.println(projectList);
+                Project project = new Project(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("description"),
+                rs.getInt("hoursinall"),
+                rs.getString("status"),
+                rs.getDate("deadline")
+                );
+                allProjectList.add(project);
             }
             System.out.println("returned projectlist");
             return allProjectList;
