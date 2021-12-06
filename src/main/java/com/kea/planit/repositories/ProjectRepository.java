@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class ProjectRepository {
 
-    private static Object Date;
+    //private static Object Date;
     private ProjectRepository projectRepository = new ProjectRepository();
 
     //Dummi class
-    public static ArrayList<Project> getProjectList(){
+    /*public static ArrayList<Project> getProjectList(){
         ArrayList<Project> projectList = new ArrayList<>();
         Project project1 = new Project(1,"Project 1", "Nice project1", 36,"Done", (java.util.Date) Date);
         Project project2 = new Project(2,"Project 2", "Nice project2", 24,"Done", (java.util.Date) Date);
@@ -25,7 +25,7 @@ public class ProjectRepository {
         projectList.add(project2);
         projectList.add(project3);
         return projectList;
-    }
+    }*/
     public ArrayList viewProject(int id) {
         try {
             Connection connection = DBconnector.getConnection();

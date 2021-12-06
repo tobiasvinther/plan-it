@@ -30,10 +30,7 @@ public class DBconnector {
             String password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, username, password);
 
-        } catch (SQLException | FileNotFoundException e) {
-            System.out.println("Something went wrong trying to connect to the database");
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
