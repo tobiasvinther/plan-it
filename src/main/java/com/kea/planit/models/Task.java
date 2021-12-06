@@ -25,6 +25,16 @@ public class Task {
         this.taskOwner = taskOwner;
     }
 
+    //constructor without id
+    public Task(String name, String description, int hours, String status, Date deadline, int taskOwner) {
+        this.name = name;
+        this.description = description;
+        this.hours = hours;
+        this.status = status;
+        this.deadline = deadline;
+        this.taskOwner = taskOwner;
+    }
+
     public int getId() {
         return id;
     }

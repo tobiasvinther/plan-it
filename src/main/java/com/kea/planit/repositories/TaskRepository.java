@@ -3,9 +3,13 @@ package com.kea.planit.repositories;
 import com.kea.planit.models.Task;
 import com.kea.planit.utilities.DBconnector;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -50,10 +54,12 @@ public class TaskRepository {
             System.out.println("Something went wrong when fetching tasks from database");
             System.out.println(e.getMessage());
         }
+        //todo: why does this fire three times?
         System.out.println("Returned task list"); //debug
         return taskList;
     }
 
+    //todo: test if it works
     public void deleteTask(int taskId) {
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM tasks WHERE id = " + taskId);
@@ -64,9 +70,33 @@ public class TaskRepository {
         }
     }
 
-    //add task dummy
+    //todo: test if it works
     public void addToTaskList(Task newTask) {
-        //taskList.add(newTask);
+
+        //convert Date to sql date
+        //java.util.Date date = new java.util.Date();
+        //date = Date.valueOf(newTask.getDeadline()));
+        //java.sql.Date sqlDate = (Date) newTask.getDeadline();
+
+
+        //java.util.Date date = newTask.getDeadline();
+        //java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("INSERT INTO tasks VALUES (default,?,?,?,?,?,?)"); //default because it auto increments
+            preparedStatement.setString(1, newTask.getName());
+            preparedStatement.setString(2, newTask.getDescription());
+            preparedStatement.setInt(3, newTask.getHours());
+            preparedStatement.setString(4, "Pending");
+            //preparedStatement.setDate(5, (Date) newTask.getDeadline());
+            preparedStatement.setDate(5, Date.valueOf("2022-12-12")); //test
+            preparedStatement.setInt(6, newTask.getTaskOwner());
+            preparedStatement.execute();
+            System.out.println("Added task to database");
+        } catch(SQLException exception) {
+            System.out.println("Something went wrong when adding task to database");
+            exception.printStackTrace();
+        }
     }
 
     //testing

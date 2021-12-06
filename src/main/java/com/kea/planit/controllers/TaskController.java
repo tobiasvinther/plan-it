@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
+import java.sql.Date;
 
 //Author: Tobias Vinther
 
@@ -38,6 +37,25 @@ public class TaskController {
         return "view-tasks";
     }
 
+    @PostMapping(value = "/view-tasks")
+    public String addTask(WebRequest userInput) {
+
+        //create a new task based on user input
+        Task newTask = new Task(
+                userInput.getParameter("newTaskName"),
+                userInput.getParameter("newTaskDescription"),
+                Integer.parseInt(userInput.getParameter("newTaskHours")),
+                "Pending",
+                Date.valueOf("2022-12-12"),
+                1 //hardcoded for testing purposes
+        );
+
+        taskRepository.addToTaskList(newTask);
+        System.out.println("Task added: " + userInput.getParameter("newTaskName"));
+        //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
+        return "redirect:/view-tasks";
+    }
+
     @GetMapping("/delete-task")
     public String deleteTask(@RequestParam String id, HttpSession session){
 
@@ -51,30 +69,5 @@ public class TaskController {
 
         return "redirect:/view-tasks";
     }
-
-    /*
-    @PostMapping(value = "/view-tasks")
-    public String addTask(WebRequest userInput) {
-
-        //todo: make this work with database once backend has been implemented
-        Task newTask = new Task(
-            99, //test id num
-            userInput.getParameter("newTaskName"),
-            userInput.getParameter("newTaskDescription"),
-            4, //test
-            //Integer.parseInt(userInput.getParameter("newTaskHours")),
-            "Pending",
-            //LocalDate.parse(userInput.getParameter("newTaskDeadline"))
-            LocalDate.now() //test
-        );
-        TaskRepository taskRepository = new TaskRepository();
-        taskRepository.addToTaskList(newTask);
-        taskRepository.printTaskList(); //test to see if task is added
-
-        return "redirect:/view-tasks";
-    }
-
-     */
-
 
 }
