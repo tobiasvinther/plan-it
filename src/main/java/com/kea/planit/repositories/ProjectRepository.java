@@ -23,13 +23,11 @@ public class ProjectRepository {
         projectList.add(project3);
         return projectList;
     }*/
-    public ArrayList viewProject(int id) {
+    public ArrayList viewProject(int projectOwner) {
         ArrayList<Project> allProjectList = new ArrayList<>();
         try {
-            Connection connection = DBconnector.getConnection();
-            PreparedStatement ppst = connection.prepareStatement("SELECT * FROM projects WHERE project_owner=");
+            PreparedStatement ppst = DBconnector.getConnection().prepareStatement("SELECT * FROM projects WHERE project_owner=" + projectOwner);
             ResultSet rs = ppst.executeQuery();
-            allProjectList = new ArrayList<>();
             while (rs.next()) {
                 Project project = new Project(
                         rs.getInt("id"),
@@ -41,7 +39,8 @@ public class ProjectRepository {
                 );
                 allProjectList.add(project);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.out.println("Something went wrong when fetching tasks from database");
             System.out.println(e.getMessage());
         }
