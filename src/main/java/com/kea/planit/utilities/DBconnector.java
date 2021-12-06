@@ -13,7 +13,11 @@ import java.util.Properties;
 
 public class DBconnector {
 
-    private static Connection connection;
+    private static String url = System.getenv("db.url");
+    private static String username = System.getenv("db.username");
+    private static String password = System.getenv("db.password");
+    private static Connection connection = null;
+
 
     private DBconnector(){}
 
@@ -25,9 +29,9 @@ public class DBconnector {
         try(InputStream stream = new FileInputStream("src/main/resources/application.properties")){
             Properties properties = new Properties();
             properties.load(stream);
-            String url = properties.getProperty("db.url");
-            String username = properties.getProperty("db.username");
-            String password = properties.getProperty("db.password");
+            url = properties.getProperty("db.url");
+            username = properties.getProperty("db.username");
+            password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, username, password);
 
         } catch (IOException | SQLException e) {
