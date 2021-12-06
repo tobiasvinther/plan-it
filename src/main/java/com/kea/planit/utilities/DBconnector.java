@@ -32,7 +32,7 @@ public class DBconnector {
             url = properties.getProperty("db.url");
             user = properties.getProperty("db.username");
             password = properties.getProperty("db.password");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, user, password);
 
         } catch (IOException | SQLException e) {
             e.printStackTrace();
