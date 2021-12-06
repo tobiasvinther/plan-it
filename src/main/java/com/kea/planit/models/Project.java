@@ -1,6 +1,7 @@
 package com.kea.planit.models;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Project {
 
@@ -9,9 +10,9 @@ public class Project {
     private String description;
     private int hoursInAll;
     private String status;
-    private LocalDate deadline;
+    private Date deadline;
 
-    public Project(int id, String name, String description, int hoursInAll, String status, LocalDate deadline) {
+    public Project(int id, String name, String description, int hoursInAll, String status, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -60,11 +61,11 @@ public class Project {
         this.status = status;
     }
 
-    public LocalDate getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 }

@@ -1,8 +1,13 @@
 package com.kea.planit.utilities;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 //Author: Tobias
 
@@ -17,14 +22,18 @@ public class DBconnector {
             return connection;
         }
 
-        try {
-            String url = System.getenv("db.url");
-            String username = System.getenv("db.username");
-            String password = System.getenv("db.password");
+        try(InputStream stream = new FileInputStream("src/main/resources/application.properties")){
+            Properties properties = new Properties();
+            properties.load(stream);
+            String url = properties.getProperty("db.url");
+            String username = properties.getProperty("db.username");
+            String password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, username, password);
 
-        } catch (SQLException e) {
+        } catch (SQLException | FileNotFoundException e) {
             System.out.println("Something went wrong trying to connect to the database");
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return connection;
