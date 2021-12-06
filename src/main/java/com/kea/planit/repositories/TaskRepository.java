@@ -54,6 +54,16 @@ public class TaskRepository {
         return taskList;
     }
 
+    public void deleteTask(int taskId) {
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM tasks WHERE id = " + taskId);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to delete task from database");
+            e.printStackTrace();
+        }
+    }
+
     //add task dummy
     public void addToTaskList(Task newTask) {
         //taskList.add(newTask);

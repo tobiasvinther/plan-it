@@ -111,7 +111,7 @@
                             <!-- delete button opens deleteTaskModal -->
                             <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" href="">
                                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
-                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task" th:href="@{/deleteTask(id=${task.getId()})}"></i>
                             </a>
                         </td>
                     </tr>

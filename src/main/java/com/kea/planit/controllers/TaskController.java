@@ -7,13 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 //Author: Tobias Vinther
 
 @Controller
 public class TaskController {
+
+    TaskRepository taskRepository = new TaskRepository();
 
     @GetMapping("/")
     public String index(){
@@ -22,7 +27,7 @@ public class TaskController {
 
     @GetMapping("/view-tasks")
     public String viewTasks(Model taskModel){
-        TaskRepository taskRepository = new TaskRepository();
+
         //taskRepository.populateTaskList();
         taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(1)); //hardcoded for testing
 
@@ -31,6 +36,20 @@ public class TaskController {
         taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
         taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
         return "view-tasks";
+    }
+
+    @GetMapping("/delete-task")
+    public String deleteTask(@RequestParam String id, HttpSession session){
+
+        //parsing the id as an int since we are receiving it as a String
+        int parsedId = Integer.parseInt(id);
+
+        //cast getAttribute as a basket, because we receive it as a generic object, even though it is a Basket
+        //Basket myBasket = (Basket)session.getAttribute("myBasket");
+
+        taskRepository.deleteTask(parsedId);
+
+        return "redirect:/view-tasks";
     }
 
     /*
