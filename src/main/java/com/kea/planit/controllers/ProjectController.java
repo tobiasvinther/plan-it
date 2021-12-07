@@ -28,9 +28,9 @@ public class ProjectController {
     @GetMapping("/view-project")
     public String viewProject(Model projectModel){
         ArrayList<Project> projects = projectRepository.viewProject(1);
-        for (Project project: projects) {
+        /*for (Project project: projects) {
             project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList(project.getId())));
-        }
+        }*/
 
         projectModel.addAttribute("projectList", projects);
         //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));

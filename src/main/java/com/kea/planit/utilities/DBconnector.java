@@ -18,8 +18,23 @@ public class DBconnector {
     private static String password = System.getenv("db.password");
     private static Connection connection = null;
 
-
     private DBconnector(){}
+
+    public static Connection getConnection0(){
+        if(connection != null){
+            return connection;
+        }
+
+        try {
+            System.out.println("Trying to connect...");
+            connection = DriverManager.getConnection(url, user, password);
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong trying to connect to the database");
+            e.printStackTrace();
+        }
+        return connection;
+    }
 
     public static Connection getConnection(){
         if(connection != null){
@@ -34,7 +49,7 @@ public class DBconnector {
             password = properties.getProperty("db.password");
             connection = DriverManager.getConnection(url, user, password);
 
-        } catch (IOException | SQLException e) {
+        } catch (SQLException  | IOException e) {
             e.printStackTrace();
         }
         return connection;

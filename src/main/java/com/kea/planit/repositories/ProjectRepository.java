@@ -32,9 +32,9 @@ public class ProjectRepository {
                 Project project = new Project(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getInt("hoursinall"),
-                        rs.getString("status"),
+                        //rs.getString("description"),
+                        //rs.getInt("hoursinall"),
+                        //rs.getString("status"),
                         rs.getDate("deadline"),
                         rs.getInt("project_owner")
                 );

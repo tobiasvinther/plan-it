@@ -51,8 +51,8 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th onclick="sortTable()">Total hours</th>
+                    <!--<th>Description</th>-->
+                    <!--<th onclick="sortTable()">Total hours</th>-->
                     <th>Status</th>
                     <th>Deadline</th>
                     <td></td>
@@ -60,9 +60,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="project : ${projectList}">
-                    <td th:text="${project.getName}"></td>
-                    <td th:text="${project.getDescription}"></td>
-                    <td th:text="${project.getHoursInAll}"></td>
+                    <td th:text="${project.name}"></td>
+                    <!--<td th:text="${project.getDescription}"></td>-->
+                    <!--<td th:text="${project.getHoursInAll}"></td>-->
                     <td >
                         <!--Select project status-->
                         <select class="form-select" aria-label="Default select example">
@@ -71,7 +71,7 @@
                             <option th:value="3">Done</option>
                         </select>
                     </td>
-                    <td th:text="${project.getDeadline}"></td>
+                    <td th:text="${project.deadline}"></td>
                     <td>
                         <!-- edit button opens editProjectModal -->
                         <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href="">
