@@ -13,7 +13,7 @@ public class Project {
     private Date deadline;
     private int projectOwner;
 
-    public Project(){}
+    public Project(String newProjectName, String pending, java.sql.Date deadline, int project_owner){}
 
     public Project(int id, String name, String description, int hoursInAll, String status, Date deadline, int projectOwner) {
         this.id = id;

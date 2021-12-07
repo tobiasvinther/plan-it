@@ -141,41 +141,42 @@
         </div>
 
         <!-- add Project -->
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">Add project</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProjectModal">Add project</button>
 
         <!-- add Project Modal -->
-        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addTaskModalLabel">New project</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="newTaskName" class="form-label">Project name</label>
-                            <input type="text" class="form-control" id="newTaskName" placeholder="Add a name">
+        <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+            <form id="addProject" method="POST" action="/view-project">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addProjectModalLabel">New Project</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <!--<div class="mb-3">
-                            <label for="newTaskDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
-                        </div>-->
-                        <!--<div class="mb-3">
-                            <label for="newTaskHours" class="form-label">Estimated hours</label>
-                            <input type="number" class="form-control" id="newTaskHours" placeholder="Hours to complete the task">
-                        </div>-->
-                        <div class="mb-3">
-                            <label for="newTaskDeadline" class="form-label">Deadline</label>
-                            <input type="date" class="form-control" id="newTaskDeadline">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="newProjectName" class="form-label">Project name</label>
+                                <input type="text" class="form-control" name="newProjectName" id="newProjectName" placeholder="Add a name">
+                            </div>
+                            <!--<div class="mb-3">
+                                <label for="newTaskDescription" class="form-label">Description</label>
+                                <textarea class="form-control" name="newTaskDescription" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskHours" class="form-label">Estimated hours</label>
+                                <input type="number" class="form-control" name="newTaskHours" id="newTaskHours" placeholder="Hours to complete the task">
+                            </div>-->
+                            <div class="mb-3">
+                                <label for="newProjectDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" name="newProjectDeadline" id="newProjectDeadline">
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success">Save</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>
 </body>
 </html>
