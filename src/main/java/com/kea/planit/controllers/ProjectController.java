@@ -8,7 +8,6 @@ import com.kea.planit.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
@@ -45,7 +44,7 @@ public class ProjectController {
         //create a new project based on user input
         Project newProject = new Project(
                 userInput.getParameter("newProjectName"),
-                userInput.getParameter("pending"),
+                "Pending",
                 Date.valueOf("2022-12-12"),
                 1 //hardcoded for testing purposes
         );

@@ -55,13 +55,13 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("INSERT INTO projects VALUES (default,?,?,?,?)");
             preparedStatement.setString(1, newProject.getName());
             preparedStatement.setString(2, "Pending");
-            //preparedStatement.setDate(5, (Date) newTask.getDeadline());
+            //preparedStatement.setDate(3, (Date) newProject.getDeadline());
             preparedStatement.setDate(3, Date.valueOf("2022-12-12")); //test
             preparedStatement.setInt(4, newProject.getProjectOwner());
             preparedStatement.execute();
-            System.out.println("Added task to database");
+            System.out.println("Added project to database");
         } catch(SQLException exception) {
-            System.out.println("Something went wrong when adding task to database");
+            System.out.println("Something went wrong when adding project to database");
             exception.printStackTrace();
         }
     }
