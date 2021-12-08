@@ -1,6 +1,6 @@
 package com.kea.planit.repositories;
 
-import com.kea.planit.models.User;
+import com.kea.planit.models.UserModel;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @Repository
 public class UserRepository {
     private static UserRepository singe_UR = null;
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<UserModel> userModels = new ArrayList<>();
     public static UserRepository getInstance(){
         if(singe_UR == null){
             singe_UR = new UserRepository();
@@ -17,21 +17,23 @@ public class UserRepository {
     }
 
     //Dummy Class for now
-    public ArrayList<User> getAllUsers(){
-        User testUser = new User("Test","Test@mail.com","Test123");
-        User secondUser = new User("Test2","Test2@mail.com","Test231");
-        users.add(testUser);
-        users.add(secondUser);
-        return users;
+    public ArrayList<UserModel> getAllUsers(){
+        UserModel testUserModel = new UserModel("Test","Test@mail.com","Test123");
+        UserModel secondUserModel = new UserModel("Test2","Test2@mail.com","Test231");
+        userModels.add(testUserModel);
+        userModels.add(secondUserModel);
+        return userModels;
     }
 
-    public void addUser(User u){
-        users.add(u);
+    public void addUser(UserModel u){
+        userModels.add(u);
     }
 
-    public User findByEmail(String email){
-        for(User u: UserRepository.getInstance().getAllUsers()){
-            if(u.getEmail().equals(email)){
+    public UserModel findByEmail(String email){
+        for(UserModel u: getAllUsers()){
+            System.out.println("Do I get here?");
+            if(u.getEmail().contains(email)){
+                System.out.println("I am here");
                 return u;
             }
         }

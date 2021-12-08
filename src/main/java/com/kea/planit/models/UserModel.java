@@ -2,7 +2,7 @@ package com.kea.planit.models;
 
 import java.util.ArrayList;
 
-public class User {
+public class UserModel {
 
     private int id;
     private String name;
@@ -11,9 +11,9 @@ public class User {
     private final ArrayList<Task> TASK_LIST = new ArrayList<>();
     private static int idcounter = 0;
 
-   public User(){};
+   public UserModel(){};
 
-    public User(String name, String email, String password) {
+    public UserModel(String name, String email, String password) {
         id= idcounter+1;
         idcounter++;
         this.name = name;
