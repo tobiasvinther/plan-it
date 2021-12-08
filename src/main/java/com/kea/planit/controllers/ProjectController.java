@@ -53,7 +53,7 @@ public class ProjectController {
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
-        return "redirect:/view-tasks";
+        return "redirect:/view-project";
     }
 
 }
