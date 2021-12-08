@@ -9,7 +9,7 @@ public class Project {
     private String name;
     //private String description;
     //private int hoursInAll;
-    //private String status;
+    private String status;
     private Date deadline;
     private int projectOwner;
 
@@ -20,14 +20,15 @@ public class Project {
         this.name = name;
         //this.description = description;
         //this.hoursInAll = hoursInAll;
-        //this.status = status;
+        this.status = status;
         this.deadline = deadline;
         this.projectOwner = projectOwner;
     }
 
-    public Project(int id, String name, java.sql.Date deadline, int project_owner) {
+    public Project(int id, String name, String status, java.sql.Date deadline, int project_owner) {
         this.id = id;
         this.name = name;
+        this.status = status;
         this.deadline = deadline;
         this.projectOwner = project_owner;
     }
@@ -64,13 +65,13 @@ public class Project {
         this.hoursInAll = hoursInAll;
     }*/
 
-    /*public String getStatus() {
+    public String getStatus() {
         return status;
-    }*/
+    }
 
-    /*public void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
-    }*/
+    }
 
     public Date getDeadline() {
         return deadline;

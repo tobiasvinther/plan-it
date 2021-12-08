@@ -30,7 +30,7 @@ public class ProjectRepository {
             ResultSet rs = ppst.executeQuery();
             while (rs.next()) {
                 Project project = new Project(
-                        rs.getInt("id"),
+                        rs.getString("id"),
                         rs.getString("name"),
                         //rs.getString("description"),
                         //rs.getInt("hoursinall"),

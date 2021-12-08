@@ -43,8 +43,7 @@ public class ProjectController {
     public String addProject(WebRequest userInput) {
         //create a new project based on user input
         Project newProject = new Project(
-                userInput.getParameter("newProjectName"),
-                "Pending",
+                userInput.getParameter("newProjectName"), "",
                 Date.valueOf("2022-12-12"),
                 1 //hardcoded for testing purposes
         );
