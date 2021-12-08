@@ -46,13 +46,18 @@
 
 <div class="container mt-5 py-5">
     <h1>Login</h1>
-    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+    <p th:if="${loginError}" class="error">Wrong userModel or password</p>
     <div id="form-wrapper">
         <form th:action="@{/login}" method="post">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input name="username" id="email"
-                       type="text" class="form-control" required>
+                <input name="email" id="email"
+                       type="email" class="form-control" required>
             </div>
 
             <div class="mb-3">
