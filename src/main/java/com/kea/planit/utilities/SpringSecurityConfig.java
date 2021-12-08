@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
-    private AuthUserDetailService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public SpringSecurityConfig(AuthUserDetailService authUserDetailService){
@@ -47,20 +47,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authProvider());
     }
 
-
     @Override
     protected void configure(HttpSecurity httpSecurity)throws Exception{
-        httpSecurity.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/","/sign-up","/login")
-                .permitAll()
-                .antMatchers("/view-tasks").access("hasRole('ROLE_ADMIN')")
+        httpSecurity.authorizeRequests()
+                .antMatchers("/login","/sign-up").permitAll()
+                .antMatchers("/view-tasks").hasAnyAuthority("USER")
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/view-tasks")
                         .failureUrl("/login?error=true")
+                        .usernameParameter("email")
                 );
     }
 
