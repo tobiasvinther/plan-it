@@ -64,17 +64,10 @@
                     <!--<td th:text="${project.getDescription}"></td>-->
                     <!--<td th:text="${project.getHoursInAll}"></td>-->
                     <td >
-                        <!--Select project status-->
-                        <select class="form-select" aria-label="Default select example" id="statusSelection">
-                            <div th:each="status:${statusCategories}">
-                                <option th:if="${status != project.getStatus()}"
-                                        th:value="${status}" th:text="${status}">
-                                </option>
-                                <option th:if="${status == project.getStatus()}"
-                                        th:value="${status}" th:text="${status}"
-                                        selected="selected">
-                                </option>
-                            </div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option th:value="1" selected>Pending</option>
+                            <option th:value="2">In progress</option>
+                            <option th:value="3">Done</option>
                         </select>
                     </td>
                     <td th:text="${project.getDeadline()}"></td>
