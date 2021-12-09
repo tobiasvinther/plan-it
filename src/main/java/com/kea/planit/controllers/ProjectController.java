@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -27,7 +26,7 @@ public class ProjectController {
     public String index() {
         return "index";
     }
-    @GetMapping("/view-project")
+    @GetMapping("/view-projects")
     public String viewProject(Model projectModel){
         //ArrayList<Project> projects = projectRepository.viewProject(1);
         /*for (Project project: projects) {
@@ -36,10 +35,10 @@ public class ProjectController {
 
         projectModel.addAttribute("projectList", projectRepository.viewProject(1));
         //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));
-        return "view-project";
+        return "view-projects";
 
     }
-    @PostMapping(value = "/add-project")
+    @PostMapping("/add-project")
     public String addProject(WebRequest userInput) {
         //create a new project based on user input
         Project newProject = new Project(
@@ -52,7 +51,7 @@ public class ProjectController {
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
-        return "redirect:/view-project";
+        return "redirect:/view-projects";
     }
 
 }
