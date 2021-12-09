@@ -39,7 +39,7 @@ public class ProjectController {
         return "view-project";
 
     }
-    @PostMapping(value = "/view-project")
+    @PostMapping(value = "/add-project")
     public String addProject(WebRequest userInput) {
         //create a new project based on user input
         Project newProject = new Project(
