@@ -24,7 +24,7 @@ public class ProjectRepository {
         return projectList;
     }*/
     public ArrayList<Project> viewProject(int projectOwner) {
-        ArrayList<Project> ProjectList = new ArrayList<>();
+        ArrayList<Project> projectList = new ArrayList<>();
         try {
             PreparedStatement ppst = DBconnector.getConnection().prepareStatement("SELECT * FROM projects WHERE project_owner=" + projectOwner);
             ResultSet rs = ppst.executeQuery();
@@ -38,7 +38,7 @@ public class ProjectRepository {
                         rs.getDate("deadline"),
                         rs.getInt("project_owner")
                 );
-                ProjectList.add(project);
+                projectList.add(project);
             }
         }
         catch (SQLException e) {
@@ -46,7 +46,7 @@ public class ProjectRepository {
             System.out.println(e.getMessage());
         }
         System.out.println("returned projectlist");
-        return ProjectList;
+        return projectList;
     }
 
     public void addToProjectList(Project newProject) {

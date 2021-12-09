@@ -34,7 +34,7 @@ public class ProjectController {
             project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList(project.getId())));
         }*/
 
-        projectModel.addAttribute("allProjectList", projectRepository.viewProject(1));
+        projectModel.addAttribute("projectList", projectRepository.viewProject(1));
         //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));
         return "view-project";
 
