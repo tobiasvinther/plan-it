@@ -26,4 +26,9 @@ public class TaskService {
         return result;
     }
 
+    public String[] getStatusCategories() {
+        String[] statusCategories = {"Pending", "In progress", "Done"};
+        return statusCategories;
+    }
+
 }

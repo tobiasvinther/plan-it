@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 //Author: Tobias Vinther
@@ -27,17 +26,18 @@ public class TaskController {
     @GetMapping("/view-tasks")
     public String viewTasks(Model taskModel){
 
-        //taskRepository.populateTaskList();
+        //get list of tasks for selected subproject
         taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(1)); //hardcoded for testing
 
         //add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
         taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
         taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
+        taskModel.addAttribute("statusCategories", taskService.getStatusCategories());
         return "view-tasks";
     }
 
-    @PostMapping(value = "/view-tasks")
+    @PostMapping("/add-task")
     public String addTask(WebRequest userInput) {
 
         //create a new task based on user input
@@ -52,22 +52,65 @@ public class TaskController {
 
         taskRepository.addToTaskList(newTask);
         System.out.println("Task added: " + userInput.getParameter("newTaskName"));
-        //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
+        return "redirect:/view-tasks";
+    }
+
+    @PostMapping("/edit-task0")
+    public String editTask0(WebRequest userInput) {
+
+        //edit task based on user input
+        Task taskToEdit = new Task(
+                userInput.getParameter("editTaskName"),
+                userInput.getParameter("editTaskDescription"),
+                Integer.parseInt(userInput.getParameter("editTaskHours")),
+                "Pending",
+                Date.valueOf("2022-12-12"),
+                1 //hardcoded for testing purposes
+        );
+
+        taskRepository.editTask(taskToEdit);
+        return "redirect:/view-tasks";
+    }
+
+    @PostMapping("/edit-task")
+    public String editTask(WebRequest userInput) {
+
+        //parse RequestParam and use it to fetch model of the task to edit
+        int parsedId = Integer.parseInt(userInput.getParameter("editTaskId"));
+        Task editedTask = taskRepository.fetchTaskById(parsedId);
+        System.out.println("Edited task id when fetched: " + editedTask.getId()); //debug
+
+        //edit task model based on user input
+        editedTask.setName(userInput.getParameter("editTaskName"));
+        editedTask.setDescription(userInput.getParameter("editTaskDescription"));
+        editedTask.setHours(Integer.parseInt(userInput.getParameter("editTaskHours")));
+
+        //send model task back to database
+        taskRepository.editTask(editedTask); //debug
+        System.out.println("Edited task id when fetched: " + editedTask.getId());
         return "redirect:/view-tasks";
     }
 
     @GetMapping("/delete-task")
-    public String deleteTask(@RequestParam String id, HttpSession session){
+    public String deleteTask(@RequestParam String id){
 
         //parsing the id as an int since we are receiving it as a String
         int parsedId = Integer.parseInt(id);
 
-        //cast getAttribute as a basket, because we receive it as a generic object, even though it is a Basket
-        //Basket myBasket = (Basket)session.getAttribute("myBasket");
-
         taskRepository.deleteTask(parsedId);
+        System.out.println("Deleted task: " + parsedId);
 
         return "redirect:/view-tasks";
     }
+
+    /*
+    @PostMapping("/delete-task")
+    public String deleteTask(WebRequest userInput){
+        taskRepository.deleteTask(Integer.parseInt(userInput.getParameter("deleteTaskId")));
+
+        return "redirect:/view-tasks";
+    }
+
+     */
 
 }

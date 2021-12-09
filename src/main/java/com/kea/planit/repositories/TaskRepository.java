@@ -2,7 +2,6 @@ package com.kea.planit.repositories;
 
 import com.kea.planit.models.Task;
 import com.kea.planit.utilities.DBconnector;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,30 +10,19 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 //Author: Tobias Vinther
 
 public class TaskRepository {
 
-    //private ArrayList<Task> taskList = new ArrayList<>();
-
-    /*dummy class so far
-    public void populateTaskList() {
-        //ArrayList<Task> taskList = new ArrayList<>();
-        Task task1 = new Task(1, "A task", "Just a task", 6, "Pending", LocalDate.now()), 1;
-        Task task2 = new Task(2, "Another task", "Just a task", 12, "Done", LocalDate.now()), 1;
-        Task task3 = new Task(3, "Yet another task", "Let's have a little longer description this time", 9, "Pending", LocalDate.now()), 1;
-        taskList.add(task1);
-        taskList.add(task2);
-        taskList.add(task3);
-    }
-     */
-
     public ArrayList<Task> getTaskInThisSubproject(int taskOwner) {
         ArrayList<Task> taskList = new ArrayList<>();
 
         try {
+            //todo: use setInt instead of concatenation
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("SELECT * FROM tasks WHERE task_owner = " + taskOwner);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -59,28 +47,46 @@ public class TaskRepository {
         return taskList;
     }
 
-    //todo: test if it works
-    public void deleteTask(int taskId) {
+    //NOT FINISHED
+    public Task fetchTaskById(int id) {
         try {
-            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM tasks WHERE id = " + taskId);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to delete task from database");
-            e.printStackTrace();
+            //String selectStatement = "SELECT * FROM tasks WHERE id = ?";
+
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("SELECT * FROM tasks WHERE id = ?");
+
+            preparedStatement.setString(1, String.valueOf(id));
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Task fetchedTask = new Task(
+                        rs.getInt("id"), //id
+                        rs.getString("name"), //name
+                        rs.getString("description"), //description
+                        rs.getInt("hours"), //hours
+                        rs.getString("status"), //status
+                        rs.getDate("deadline"), //deadline
+                        rs.getInt("task_owner") //taskOwner
+                );
+                System.out.println("Task (id: " + fetchedTask.getId() + ") fetched");
+                return fetchedTask;
+            }
         }
+        catch(SQLException e){
+            System.out.println("Something went wrong when fetching tasks from database");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Task not fetched, returned null"); //debug
+        return null;
     }
 
-    //todo: test if it works
     public void addToTaskList(Task newTask) {
 
-        //convert Date to sql date
-        //java.util.Date date = new java.util.Date();
-        //date = Date.valueOf(newTask.getDeadline()));
-        //java.sql.Date sqlDate = (Date) newTask.getDeadline();
+        //String input = newTask.getDeadline().toString();
+        //DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern( "yyyy/MM/dd" ) ;
+        //LocalDate deadLineAsLocalDate = LocalDate.parse(input, dateFormatter) ;
 
-
-        //java.util.Date date = newTask.getDeadline();
-        //java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        //LocalDate deadLineAsLocalDate = newTask.getDeadline().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("INSERT INTO tasks VALUES (default,?,?,?,?,?,?)"); //default because it auto increments
@@ -89,6 +95,7 @@ public class TaskRepository {
             preparedStatement.setInt(3, newTask.getHours());
             preparedStatement.setString(4, "Pending");
             //preparedStatement.setDate(5, (Date) newTask.getDeadline());
+            //preparedStatement.setObject(5, deadLineAsLocalDate);
             preparedStatement.setDate(5, Date.valueOf("2022-12-12")); //test
             preparedStatement.setInt(6, newTask.getTaskOwner());
             preparedStatement.execute();
@@ -99,13 +106,56 @@ public class TaskRepository {
         }
     }
 
-    //testing
-    /*
-    public void printTaskList() {
-        for (Task task : taskList) {
-            System.out.println(task.getName());
+    public void editTask0(Task taskToEdit) {
+
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
+                    "UPDATE tasks SET name = ?, description = ?, hours = ?, deadline = ? WHERE task_owner = ?");
+            preparedStatement.setString(1, taskToEdit.getName());
+            preparedStatement.setString(2, taskToEdit.getDescription());
+            preparedStatement.setInt(3, taskToEdit.getHours());
+            //preparedStatement.setString(4, taskToEdit.getStatus());
+            preparedStatement.setDate(4, Date.valueOf("2022-12-12")); //test
+            preparedStatement.setInt(5, taskToEdit.getTaskOwner());
+            preparedStatement.executeUpdate();
+            System.out.println("Task edited");
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when editing task");
+            e.printStackTrace();
         }
     }
-     */
+
+    //todo: find out why it edits all tasks in subproject at once
+    public void editTask(Task editedTask) {
+
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
+                    "UPDATE tasks SET name = ?, description = ?, hours = ?, deadline = ? WHERE id = ?");
+            preparedStatement.setString(1, editedTask.getName());
+            preparedStatement.setString(2, editedTask.getDescription());
+            preparedStatement.setInt(3, editedTask.getHours());
+            //preparedStatement.setString(4, taskToEdit.getStatus());
+            preparedStatement.setDate(4, Date.valueOf("2022-12-12")); //test because it's not working
+            preparedStatement.setInt(5, editedTask.getId());
+            preparedStatement.executeUpdate();
+            System.out.println("Task edited (id: " + editedTask.getId() + ")"); //debug
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when editing task");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void deleteTask(int taskId) {
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM tasks WHERE id = ?");
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.execute();
+            System.out.println("Deleted task");
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to delete task from database");
+            e.printStackTrace();
+        }
+    }
 
 }

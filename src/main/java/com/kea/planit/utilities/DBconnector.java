@@ -13,13 +13,13 @@ import java.util.Properties;
 public class DBconnector {
 
     private static String url = System.getenv("db.url");
-    private static String user = System.getenv("db.username");
+    private static String user = System.getenv("db.user");
     private static String password = System.getenv("db.password");
     private static Connection connection = null;
 
     private DBconnector(){}
 
-    public static Connection getConnection0(){
+    public static Connection getConnection(){
         if(connection != null){
             return connection;
         }
@@ -35,7 +35,7 @@ public class DBconnector {
         return connection;
     }
 
-    public static Connection getConnection(){
+    public static Connection getConnection_old(){
         if(connection != null){
             return connection;
         }
