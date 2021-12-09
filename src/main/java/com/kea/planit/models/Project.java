@@ -14,7 +14,7 @@ public class Project {
     private int projectOwner;
 
 
-    public Project(int id, String name, String status, Date deadline, int projectOwner) {
+    public Project(int id, String name, Date deadline, int projectOwner) {
         this.id = id;
         this.name = name;
         this.status = status;
