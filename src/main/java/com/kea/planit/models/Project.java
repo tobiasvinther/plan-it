@@ -13,24 +13,20 @@ public class Project {
     private Date deadline;
     private int projectOwner;
 
-    public Project(String newProjectName, String pending, java.sql.Date deadline, int project_owner){}
 
-    public Project(int id, String name, String description, int hoursInAll, String status, Date deadline, int projectOwner) {
+    public Project(int id, String name, String status, Date deadline, int projectOwner) {
         this.id = id;
         this.name = name;
-        //this.description = description;
-        //this.hoursInAll = hoursInAll;
         this.status = status;
         this.deadline = deadline;
         this.projectOwner = projectOwner;
     }
 
-    public Project(int id, String name, String status, java.sql.Date deadline, int project_owner) {
-        this.id = id;
+    public Project(String name, String status, java.sql.Date deadline, int projectOwner) {
         this.name = name;
         this.status = status;
         this.deadline = deadline;
-        this.projectOwner = project_owner;
+        this.projectOwner = projectOwner;
     }
 
     public int getId() {

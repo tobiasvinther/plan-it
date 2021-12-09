@@ -23,14 +23,14 @@ public class ProjectRepository {
         projectList.add(project3);
         return projectList;
     }*/
-    public ArrayList viewProject(int projectOwner) {
-        ArrayList<Project> allProjectList = new ArrayList<>();
+    public ArrayList<Project> viewProject(int projectOwner) {
+        ArrayList<Project> ProjectList = new ArrayList<>();
         try {
             PreparedStatement ppst = DBconnector.getConnection().prepareStatement("SELECT * FROM projects WHERE project_owner=" + projectOwner);
             ResultSet rs = ppst.executeQuery();
             while (rs.next()) {
                 Project project = new Project(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         //rs.getString("description"),
                         //rs.getInt("hoursinall"),
@@ -38,7 +38,7 @@ public class ProjectRepository {
                         rs.getDate("deadline"),
                         rs.getInt("project_owner")
                 );
-                allProjectList.add(project);
+                ProjectList.add(project);
             }
         }
         catch (SQLException e) {
@@ -46,7 +46,7 @@ public class ProjectRepository {
             System.out.println(e.getMessage());
         }
         System.out.println("returned projectlist");
-        return allProjectList;
+        return ProjectList;
     }
 
     public void addToProjectList(Project newProject) {

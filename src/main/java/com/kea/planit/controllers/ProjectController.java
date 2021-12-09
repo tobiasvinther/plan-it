@@ -29,12 +29,12 @@ public class ProjectController {
     }
     @GetMapping("/view-project")
     public String viewProject(Model projectModel){
-        ArrayList<Project> projects = projectRepository.viewProject(1);
+        //ArrayList<Project> projects = projectRepository.viewProject(1);
         /*for (Project project: projects) {
             project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList(project.getId())));
         }*/
 
-        projectModel.addAttribute("projectList", projects);
+        projectModel.addAttribute("allProjectList", projectRepository.viewProject(1));
         //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));
         return "view-project";
 
@@ -43,7 +43,8 @@ public class ProjectController {
     public String addProject(WebRequest userInput) {
         //create a new project based on user input
         Project newProject = new Project(
-                userInput.getParameter("newProjectName"), "",
+                userInput.getParameter("newProjectName"),
+                "Pending",
                 Date.valueOf("2022-12-12"),
                 1 //hardcoded for testing purposes
         );
