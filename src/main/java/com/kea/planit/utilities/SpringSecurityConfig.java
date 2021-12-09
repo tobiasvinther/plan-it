@@ -59,6 +59,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         .failureUrl("/login?error=true")
                         .usernameParameter("email")
                 );
+
     }
 
 }

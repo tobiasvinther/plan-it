@@ -47,7 +47,7 @@
     </nav>
 
         <div class="container mt-5 py-5">
-            <h1>Sign up</h1>
+            <h1 class="h1">Sign up</h1>
             <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
             <div id="form-wrapper">
                 <form id="sign-up-form" method="POST" th:action="@{/sign-up}" th:object="${signUpForm}" >
