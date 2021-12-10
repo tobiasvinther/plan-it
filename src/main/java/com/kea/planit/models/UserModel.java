@@ -10,16 +10,15 @@ public class UserModel {
     private String email;
     private String password;
     private final ArrayList<Task> TASK_LIST = new ArrayList<>();
-    private static int idcounter = 0;
+
 
    public UserModel(){};
 
-    public UserModel(String name, String email, String password) {
-        id= idcounter+1;
-        idcounter++;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public UserModel(int id,String name, String email, String password) {
+       this.id = id;
+       this.name = name;
+       this.email = email;
+       this.password = password;
     }
 
     public int getId() {

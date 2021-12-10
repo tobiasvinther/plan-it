@@ -1,12 +1,8 @@
 package com.kea.planit.utilities;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 //Author: Tobias Vinther
 
@@ -23,7 +19,6 @@ public class DBconnector {
         if(connection != null){
             return connection;
         }
-
         try {
             System.out.println("Trying to connect...");
             connection = DriverManager.getConnection(url, user, password);

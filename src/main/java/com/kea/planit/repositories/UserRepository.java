@@ -1,11 +1,16 @@
 package com.kea.planit.repositories;
 
 import com.kea.planit.models.UserModel;
+import com.kea.planit.utilities.DBconnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 //Author: Jonatan Segal
@@ -13,6 +18,7 @@ import java.util.ArrayList;
 public class UserRepository {
 
     private static UserRepository singe_UR = null;
+    private Connection conn = DBconnector.getConnection();
     private static ArrayList<UserModel> userModels = new ArrayList<>();
     public static UserRepository getInstance(){
         if(singe_UR == null){
@@ -22,19 +28,45 @@ public class UserRepository {
     }
 
     private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public Connection getConn(){
+        return conn;
+    }
 
 
-    //Dummy Class for now
     public ArrayList<UserModel> getAllUsers(){
-        UserModel testUserModel = new UserModel("Test","Test@mail.com",passwordEncoder.encode("Test123"));
-        UserModel secondUserModel = new UserModel("Test2","Test2@mail.com",passwordEncoder.encode("Test321"));
-        userModels.add(testUserModel);
-        userModels.add(secondUserModel);
+        PreparedStatement ppst=null;
+        try{
+            ppst = conn.prepareStatement("SELECT * FROM planit.users");
+            ResultSet rs = ppst.executeQuery();
+            while(rs.next()){
+                UserModel rsUser = new UserModel(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        passwordEncoder.encode(rs.getString(4))
+                );
+                userModels.add(rsUser);
+            }
+
+        }catch (SQLException e){
+            System.out.println("Something went wrong");
+            System.out.println(e.getMessage());
+        }
         return userModels;
     }
 
     public void addUser(UserModel u){
-        userModels.add(u);
+        try {
+            PreparedStatement ppst = UserRepository.getInstance().getConn().prepareStatement
+                    ("INSERT INTO planit.users (username,useremail,userpassword) VALUES (?,?,?)");
+            ppst.setString(1,u.getName());
+            ppst.setString(2,u.getEmail());
+            ppst.setString(3,u.getPassword());
+            ppst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Something is wrong");
+            System.out.println(e.getMessage());
+        }
     }
 
     public UserModel findByEmail(String email){
