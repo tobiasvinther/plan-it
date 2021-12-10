@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-    private AuthenticationService as = new AuthenticationService();
+    private AuthenticationService authService = new AuthenticationService();
 
     @GetMapping("/")
     public String index(){
@@ -18,7 +18,7 @@ public class MainController {
 
     @GetMapping("/view-tasks")
     public String viewTasks(Model taskModel, Authentication authentication){
-        as.findUserId(authentication);
+        authService.findUserId(authentication);
         TaskRepository taskRepository = new TaskRepository();
         //taskModel.addAttribute("taskList", taskRepository.getTaskList());
         return "view-tasks";
