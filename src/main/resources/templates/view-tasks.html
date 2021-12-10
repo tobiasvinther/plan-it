@@ -6,9 +6,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!-- icons -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="progress-bar.css">
     <title>Task List</title>
 </head>
-
+<!-- Author: Tobias Vinther -->
 <!-- perhaps move to a css -->
 <style>
     th {
@@ -51,7 +52,7 @@
         </div>
     </nav>
 
-    <!-- Subproject select -->
+    <!-- Title and subproject select -->
     <div class="container mt-5 py-5">
     <h1>Project title</h1>
         <div class="row justify-content-start">
@@ -63,6 +64,62 @@
                 </select>
             </div>
 
+        </div>
+    </div>
+
+    <!-- ANOTHER EXPERIMENT
+    <div class="container pb-1">
+        <div class="counter" th:attr="data-target=${totalHours}" >0</div>
+        <h3>Total tasks</h3>
+        <script>
+            const counters = document.querySelectorAll('.counter');
+            const speed = 100; // The lower the slower
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+
+                    // Lower inc to slow and higher to slow
+                    const inc = target / speed;
+
+                    // Check if target is reached
+                    if (count < target) {
+                        // Add inc to count and output in counter
+                        counter.innerText = count + inc;
+                        // Call function every ms
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                updateCount();
+            });
+        </script>
+    </div>
+    -->
+    <!-- END -->
+
+    <!-- EXPERIMENT
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="progress blue"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
+                <div class="progress-value">90%</div>
+            </div>
+            <div class="progress yellow"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
+                <div class="progress-value">37.5%</div>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <!--total hours-->
+    <div class="container pb-1" >
+        <div class="d-flex flex-row justify-content-between">
+            <h5>Total tasks: <span th:text="${taskList.size()}"></span></h5>
+            <h5>Total hours: <span th:text="${totalHours}"></span></h5>
+            <h5>Completion : <span th:text="${completionPercentage}"></span>%</h5>
         </div>
     </div>
 
@@ -81,27 +138,145 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="task : ${taskList}">
+                    <tr th:each="task : ${taskList}"> <!--th:attr="id=${'editTaskModal' + task.getId()}"-->
                         <td th:text="${task.getName()}"></td>
                         <td th:text="${task.getDescription()}"></td>
                         <td th:text="${task.getHours()}"></td>
                         <td >
-                            <select class="form-select" aria-label="Default select example">
-                                <option th:value="1" selected>Pending</option>
-                                <option th:value="2">In progress</option>
-                                <option th:value="3">Done</option>
+                            <!--Load statuses-->
+                            <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="" > <!--th:href="@{/change-status(id=${task.getId()})(updatedStatus=${status})}" -->
+                                <!--For each status: if it's equal to the task's status, set this option as selected-->
+                                <div th:each="status:${statusCategories}">
+                                    <option th:if="${status != task.getStatus()}"
+                                        th:value="${status}" th:text="${status}">
+                                    </option>
+                                    <option th:if="${status == task.getStatus()}"
+                                            th:value="${status}" th:text="${status}"
+                                            selected="selected">
+                                    </option>
+                                </div>
                             </select>
-                        </td>
-                        <td th:text="${task.getDeadline()}"></td>
-                        <td>
-                            <a class="btn btn-secondary flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task" href=""><i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i></a>
-                            <a class="btn btn-danger flex-end" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task" href=""><i class="bi bi-trash" style="font-size: 1rem; color: white;"></i></a>
+                       </td>
+                       <td th:text="${task.getDeadline()}"></td>
+                       <td>
+                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href=""> <!--  th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" -->
+                               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
+                               <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
+                           </a>
+
+                           <!-- editTaskModal -->
+                            <!-- Issues:
+                             1. it shows and edits the data from the first task no matter which task you open
+                             -->
+                            <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+                                <form id="editTask" method="POST" action="/edit-task">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editTaskModalLabel">Edit task</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="editTaskName" class="form-label">Task title</label>
+                                                    <input type="text" class="form-control" name="editTaskName" id="editTaskName" placeholder="Add a title" th:value="${task.getName()}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="editTaskDescription" class="form-label">Description</label>
+                                                    <textarea class="form-control" name="editTaskDescription" id="editTaskDescription" rows="3" placeholder="Add a description (optional)" th:text="${task.getDescription()}"></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="editTaskHours" class="form-label">Estimated hours</label>
+                                                    <input type="number" class="form-control" name="editTaskHours" id="editTaskHours" placeholder="Hours to complete the task" th:value="${task.getHours()}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="editTaskDeadline" class="form-label">Deadline</label>
+                                                    <input type="date" class="form-control" name="editTaskDeadline" id="editTaskDeadline" th:value="${task.getDeadline()}">
+                                                </div>
+                                                <div><input type=hidden name="editTaskId" id="editTaskId" th:value="${task.getId()}"></div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <!--<button type="submit" class="btn btn-success">Save</button>-->
+                                                <!--<a class="btn btn-success" th:href="@{/edit-task(id=${task.getId()})}">Save</a>-->
+                                                <button type="submit" class="btn btn-success">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- delete button opens deleteTaskModal -->
+                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" >
+                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
+                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                            </a>
+
+                            <!-- delete task modal -->
+                            <div class="modal" id="deleteTaskModal" tabindex="-1" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
+                                <!--<form id="deleteWish" method="POST" action="/delete-task">-->
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0 text-center">
+                                            <h5 class="modal-title w-100" id="deleteTaskModalLabel">Delete task?</h5>
+                                            <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                                        </div>
+
+                                        <div class="modal-footer border-0 justify-content-center">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <!--<input type=hidden name="deleteTaskId" id="deleteTaskId" th:value="${task.getId()}">-->
+                                            <!--<button type="submit" class="btn btn-danger">Delete</button>-->
+                                            <a class="btn btn-danger" th:href="@{/delete-task(id=${task.getId()})}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--</form>-->
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-success">Add task</button>
+
+        <!-- add task button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">Add task</button>
+
+        <!-- addTaskModal -->
+        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+            <form id="addWish" method="POST" action="/add-task">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addTaskModalLabel">New task</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="newTaskName" class="form-label">Task title</label>
+                                <input type="text" class="form-control" name="newTaskName" id="newTaskName" placeholder="Add a title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskDescription" class="form-label">Description</label>
+                                <textarea class="form-control" name="newTaskDescription" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskHours" class="form-label">Estimated hours</label>
+                                <input type="number" class="form-control" name="newTaskHours" id="newTaskHours" placeholder="Hours to complete the task">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newTaskDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" name="newTaskDeadline" id="newTaskDeadline">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </div>
 
     <script>

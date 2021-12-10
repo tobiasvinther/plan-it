@@ -3,6 +3,8 @@ package com.kea.planit.models;
 import java.time.LocalDate;
 import java.util.Date;
 
+//Author: Tobias Vinther
+
 public class Task {
 
     private int id;
@@ -10,18 +12,26 @@ public class Task {
     private String description;
     private int hours;
     private String status;
-    private LocalDate deadline;
-    private int projectId;
+    private Date deadline;
     private int taskOwner;
 
-    public Task(int id, String name, String description, int hours, String status, LocalDate deadline, int projectId, int taskOwner) {
+    public Task(int id, String name, String description, int hours, String status, Date deadline, int taskOwner) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
         this.status = status;
         this.deadline = deadline;
-        this.projectId = projectId;
+        this.taskOwner = taskOwner;
+    }
+
+    //constructor without id
+    public Task(String name, String description, int hours, String status, Date deadline, int taskOwner) {
+        this.name = name;
+        this.description = description;
+        this.hours = hours;
+        this.status = status;
+        this.deadline = deadline;
         this.taskOwner = taskOwner;
     }
 
@@ -65,20 +75,12 @@ public class Task {
         this.status = status;
     }
 
-    public LocalDate getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
     }
 
     public int getTaskOwner() {
