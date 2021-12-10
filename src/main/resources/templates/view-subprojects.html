@@ -1,10 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!-- icons -->
+    <link rel="stylesheet" href="style.css">
+    <title>Subproject List</title>
 </head>
-<body>
+<!-- Author: Tobias Vinther -->
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
 
+<body class="bg-light">
+<!-- bootstrap import -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark py-3 fixed-top">
+    <div class="container">
+        <a href="/" class="navbar-brand">PLAN-IT</a>
+
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navmenu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="#learn" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#questions" class="nav-link">My projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#instructors" class="nav-link">Sign up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Title -->
+<div class="container mt-5 py-5">
+    <h1>Project title</h1>
+    <!--
+    <div class="row justify-content-start">
+        <div class="col-3">
+            <select class="form-select" aria-label="Default select example">
+                <option th:value="1" selected>Subproject 1</option>
+                <option th:value="2">Subproject 2</option>
+                <option th:value="3">Subproject 3</option>
+            </select>
+        </div>
+
+    </div>
+    -->
+</div>
+
+<!--total hours
+<div class="container pb-1" >
+    <div class="d-flex flex-row justify-content-between">
+        <h5>Total tasks: <span th:text="${taskList.size()}"></span></h5>
+        <h5>Total hours: <span th:text="${totalHours}"></span></h5>
+        <h5>Completion : <span th:text="${completionPercentage}"></span>%</h5>
+    </div>
+</div>
+-->
+<!-- Subproject table -->
+<div class="container">
+    <div >
+        <table id="subprojectTable" class="table table-hover table-bordered table-light">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Deadline</th>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subproject : ${subprojectList}">
+                <td th:text="${subproject.getName()}"></td>
+                <td th:text="${subproject.getDeadline()}"></td>
+                <td>
+                    <!-- when we target the modal, we also have to target the right id -->
+                    <a class="btn btn-secondary flex-end" data-bs-toggle="modal" th:attr="data-bs-target=${'#editSubprojectModal'+subproject.getId()}" href="">
+                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
+                        <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
+                    </a>
+
+                    <!-- editTaskModal -->
+                    <!-- when we create the modal we edit each modal's id to match the task's id, otherwise every edit button will refer to the same modal -->
+                    <div class="modal fade" th:attr="id=${'editSubprojectModal' + subproject.getId()}" tabindex="-1" aria-labelledby="editSubprojectModalLabel" aria-hidden="true">
+                        <form id="editSubproject" method="POST" action="/edit-subproject">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editSubprojectModalLabel">Edit subproject</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="editSubprojectName" class="form-label">Subproject title</label>
+                                            <input type="text" class="form-control" name="editSubprojectName" id="editSubprojectName" placeholder="Add a title" th:value="${subproject.getName()}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="editSubprojectDeadline" class="form-label">Deadline</label>
+                                            <input type="date" class="form-control" name="editSubprojectDeadline" id="editSubprojectDeadline" th:value="${subproject.getDeadline()}">
+                                        </div>
+                                        <div><input type=hidden name="editSubprojectId" id="editSubprojectId" th:value="${subproject.getId()}"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- delete button opens deleteTaskModal -->
+                    <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteSubprojectModal" >
+                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete subproject"></span>
+                        <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete subproject"></i>
+                    </a>
+
+                    <!-- delete task modal -->
+                    <div class="modal" id="deleteSubprojectModal" tabindex="-1" aria-labelledby="deleteSubprojectModalLabel" aria-hidden="true">
+                        <!--<form id="deleteWish" method="POST" action="/delete-task">-->
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header border-0 text-center">
+                                    <h5 class="modal-title w-100" id="deleteSubprojectModalLabel">Delete subproject?</h5>
+                                    <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                                </div>
+
+                                <div class="modal-footer border-0 justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <!--<input type=hidden name="deleteTaskId" id="deleteTaskId" th:value="${task.getId()}">-->
+                                    <!--<button type="submit" class="btn btn-danger">Delete</button>-->
+                                    <a class="btn btn-danger" th:href="@{/delete-subproject(id=${subproject.getId()})}">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--</form>-->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- add task button -->
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSubprojectModal">Add subproject</button>
+
+    <!-- addTaskModal -->
+    <div class="modal fade" id="addSubprojectModal" tabindex="-1" aria-labelledby="addSubprojectModalLabel" aria-hidden="true">
+        <form id="addWish" method="POST" action="/add-subproject">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSubprojectModalLabel">New subproject</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newSubprojectName" class="form-label">Subproject title</label>
+                            <input type="text" class="form-control" name="newSubprojectName" id="newSubprojectName" placeholder="Add a title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newSubprojectDeadline" class="form-label">Deadline</label>
+                            <input type="date" class="form-control" name="newSubprojectDeadline" id="newSubprojectDeadline">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function sortTable() {
+        console.log("Started sorting by hours");
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("subprojectTable");
+        switching = true;
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            console.log("Do we get to here?");
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+                //check if the two rows should switch place:
+                if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+        console.log("Done sorting by hours");
+    }
+</script>
 </body>
-</html>
