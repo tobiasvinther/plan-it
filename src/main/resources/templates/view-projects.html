@@ -72,36 +72,28 @@
                                 <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                             </a>
 
-                        <!-- editTaskModal -->
+                        <!-- editProjectModal -->
                         <!-- Issues:
                          1. it shows the data from the first task no matter which task you open
                          -->
                             <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-                                <form id="editTask" method="POST" action="/edit-task">
+                                <form id="editTask" method="POST" action="/edit-project">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editTaskModalLabel">Edit task</h5>
+                                                <h5 class="modal-title" id="editTaskModalLabel">Edit project</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="editTaskName" class="form-label">Task title</label>
-                                                    <input type="text" class="form-control" name="editTaskName" id="editTaskName" placeholder="Add a title" th:value="${task.getName()}">
+                                                    <label for="editProjectName" class="form-label">Project name</label>
+                                                    <input type="text" class="form-control" name="editTaskName" id="editProjectName" placeholder="Add a title" th:value="${project.getName()}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="editTaskDescription" class="form-label">Description</label>
-                                                    <textarea class="form-control" name="editTaskDescription" id="editTaskDescription" rows="3" placeholder="Add a description (optional)" th:text="${task.getDescription()}"></textarea>
+                                                    <label for="editProjectDeadline" class="form-label">Deadline</label>
+                                                    <input type="date" class="form-control" name="editProjectDeadline" id="editProjectDeadline" th:value="${project.getDeadline()}">
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="editTaskHours" class="form-label">Estimated hours</label>
-                                                    <input type="number" class="form-control" name="editTaskHours" id="editTaskHours" placeholder="Hours to complete the task" th:value="${task.getHours()}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="editTaskDeadline" class="form-label">Deadline</label>
-                                                    <input type="date" class="form-control" name="editTaskDeadline" id="editTaskDeadline" th:value="${task.getDeadline()}">
-                                                </div>
-                                                <div><input type=hidden name="editTaskId" id="editTaskId" th:value="${task.getId()}"></div>
+                                                <div><input type=hidden name="editProjectId" id="editProjectId" th:value="${project.getId()}"></div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -163,14 +155,6 @@
                                     <label for="newProjectName" class="form-label">Project name</label>
                                     <input type="text" class="form-control" name="newProjectName" id="newProjectName" placeholder="Add a name">
                                 </div>
-                            <!--<div class="mb-3">
-                                <label for="newTaskDescription" class="form-label">Description</label>
-                                <textarea class="form-control" name="newTaskDescription" id="newTaskDescription" rows="3" placeholder="Add a description (optional)"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newTaskHours" class="form-label">Estimated hours</label>
-                                <input type="number" class="form-control" name="newTaskHours" id="newTaskHours" placeholder="Hours to complete the task">
-                            </div>-->
                                 <div class="mb-3">
                                     <label for="newProjectDeadline" class="form-label">Deadline</label>
                                     <input type="date" class="form-control" name="newProjectDeadline" id="newProjectDeadline">
