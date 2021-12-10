@@ -103,7 +103,7 @@ public class TaskController {
         editedTask.setStatus(updatedStatus);
         //update task in database
         taskRepository.editTask(editedTask);
-
+        System.out.println("Changed status to " + updatedStatus);
         return "redirect:/view-tasks";
     }
 

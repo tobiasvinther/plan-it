@@ -144,7 +144,7 @@
                         <td th:text="${task.getHours()}"></td>
                         <td >
                             <!--Load statuses-->
-                            <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="">
+                            <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="" > <!--th:href="@{/change-status(id=${task.getId()})(updatedStatus=${status})}" -->
                                 <!--For each status: if it's equal to the task's status, set this option as selected-->
                                 <div th:each="status:${statusCategories}">
                                     <option th:if="${status != task.getStatus()}"
@@ -159,7 +159,7 @@
                        </td>
                        <td th:text="${task.getDeadline()}"></td>
                        <td>
-                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" href=""> <!--  th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" -->
+                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href=""> <!--  th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" -->
                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
                                <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                            </a>
@@ -168,7 +168,7 @@
                             <!-- Issues:
                              1. it shows and edits the data from the first task no matter which task you open
                              -->
-                            <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
                                 <form id="editTask" method="POST" action="/edit-task">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
