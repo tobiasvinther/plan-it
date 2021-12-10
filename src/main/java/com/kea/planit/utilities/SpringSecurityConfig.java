@@ -50,15 +50,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.authorizeRequests()
-                .antMatchers("/login","/sign-up").permitAll()
+                .antMatchers("/","/login","/sign-up").permitAll()
                 .antMatchers("/view-tasks").hasAnyAuthority("USER")
                 .and()
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/view-tasks")
-                        .failureUrl("/login?error=true")
-                        .usernameParameter("email")
-                );
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/view-tasks")
+                .failureUrl("/login?error=true")
+                .usernameParameter("email")
+                .and()
+                .logout().deleteCookies()
+                .logoutSuccessUrl("/");
 
     }
 

@@ -38,14 +38,19 @@
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="#learn" class="nav-link">About</a>
+                        <a href="/" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#questions" class="nav-link">My projects</a>
+                        <a href="/view-tasks" class="nav-link">My projects</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/sign-up" class="nav-link">Sign up</a>
+
+                    <li sec:authorize="isAuthenticated()">
+                        <a href="javascript: document.logoutForm.submit()" class="nav-link">Logout</a>
+                        <form name="logoutForm" th:action="@{/logout}" method="post">
+                            <input hidden type="submit" value="Sign Out" />
+                        </form>
                     </li>
+
                 </ul>
             </div>
         </div>
