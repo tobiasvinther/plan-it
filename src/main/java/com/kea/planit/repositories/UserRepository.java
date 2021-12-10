@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
+//Author: Jonatan Segal
 @Repository
 public class UserRepository {
 

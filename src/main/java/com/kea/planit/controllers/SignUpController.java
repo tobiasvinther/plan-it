@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//Author: Jonatan Segal
 @Controller
 public class SignUpController {
     private static SignUPServices sus = new SignUPServices();

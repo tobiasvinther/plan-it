@@ -5,6 +5,7 @@ import com.kea.planit.repositories.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+//Author: Jonatan Segal
 @Service
 public class AuthenticationService {
 

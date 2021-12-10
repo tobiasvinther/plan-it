@@ -20,7 +20,7 @@ public class MainController {
     public String viewTasks(Model taskModel, Authentication authentication){
         as.findUserId(authentication);
         TaskRepository taskRepository = new TaskRepository();
-        taskModel.addAttribute("taskList", taskRepository.getTaskList());
+        //taskModel.addAttribute("taskList", taskRepository.getTaskList());
         return "view-tasks";
     }
 
