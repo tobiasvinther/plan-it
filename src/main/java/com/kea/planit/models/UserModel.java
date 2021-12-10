@@ -21,6 +21,9 @@ public class UserModel {
         this.password = password;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
