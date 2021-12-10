@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SignUPServices {
 
-    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
 
     public boolean isUserValid(UserModel userModel){
         return isEmailValid(userModel.getEmail());
@@ -32,7 +33,7 @@ public class SignUPServices {
     }
 
     private void encodePassword(UserModel userModel){
-        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        userModel.setPassword(passwordEncoder().encode(userModel.getPassword()));
     }
 
 }

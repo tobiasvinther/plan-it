@@ -27,7 +27,6 @@ public class UserRepository {
         return singe_UR;
     }
 
-    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public Connection getConn(){
         return conn;
     }
@@ -43,8 +42,9 @@ public class UserRepository {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        passwordEncoder.encode(rs.getString(4))
+                        rs.getString(4)
                 );
+                System.out.println(rsUser.getPassword());
                 userModels.add(rsUser);
             }
 
