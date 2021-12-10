@@ -21,31 +21,27 @@ public class ProjectController {
     ProjectService projectService = new ProjectService();
     TaskService taskService = new TaskService();
 
-
+/*
     @GetMapping("/")
     public String index() {
         return "index";
     }
+
+ */
     @GetMapping("/view-projects")
     public String viewProject(Model projectModel){
-        //ArrayList<Project> projects = projectRepository.viewProject(1);
-        /*for (Project project: projects) {
-            project.setHoursInAll(taskService.calculateTaskHours(taskRepository.getTaskList(project.getId())));
-        }*/
-
         projectModel.addAttribute("projectList", projectRepository.viewProject(1));
-        //projectModel.addAttribute("taskList", taskRepository.getTaskList(id));
         return "view-projects";
 
     }
     @PostMapping("/add-project")
     public String addProject(WebRequest userInput) {
-        //create a new project based on user input
+        //create a new project
         Project newProject = new Project(
                 userInput.getParameter("newProjectName"),
                 "Pending",
                 Date.valueOf("2022-12-12"),
-                1 //hardcoded for testing purposes
+                1
         );
 
         projectRepository.addToProjectList(newProject);
