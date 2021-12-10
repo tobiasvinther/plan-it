@@ -125,7 +125,6 @@ public class TaskRepository {
         }
     }
 
-    //todo: find out why it edits all tasks in subproject at once
     public void editTask(Task editedTask) {
 
         try {
