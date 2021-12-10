@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
@@ -49,5 +50,15 @@ public class ProjectController {
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
         return "redirect:/view-projects";
     }
+    @GetMapping("/delete-project")
+    public String deleteTask(@RequestParam String id){
 
+        //parsing the id as an int since we are receiving it as a String
+        int parsedId = Integer.parseInt(id);
+
+        projectRepository.deleteProject(parsedId);
+        System.out.println("Deleted project: " + parsedId);
+
+        return "redirect:/view-projects";
+    }
 }

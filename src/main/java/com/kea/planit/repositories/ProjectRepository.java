@@ -63,6 +63,17 @@ public class ProjectRepository {
             exception.printStackTrace();
         }
     }
+    public void deleteProject(int projectId) {
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM projects WHERE id = ?");
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.execute();
+            System.out.println("Deleted project");
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to delete project from database");
+            e.printStackTrace();
+        }
+    }
 }
 
 
