@@ -1,7 +1,6 @@
 package com.kea.planit.controllers;
 
 import com.kea.planit.repositories.TaskRepository;
-import com.kea.planit.repositories.UserRepository;
 import com.kea.planit.services.AuthenticationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
