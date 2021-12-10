@@ -91,6 +91,22 @@ public class TaskController {
         return "redirect:/view-tasks";
     }
 
+    //todo: finish this method
+    @GetMapping("/change-status")
+    public String changeStatus(@RequestParam String id, @RequestParam String updatedStatus){
+
+        //parsing the id as an int since we are receiving it as a String
+        int parsedId = Integer.parseInt(id);
+        //fetch the task in question
+        Task editedTask = taskRepository.fetchTaskById(parsedId);
+        //edit the task's status
+        editedTask.setStatus(updatedStatus);
+        //update task in database
+        taskRepository.editTask(editedTask);
+
+        return "redirect:/view-tasks";
+    }
+
     @GetMapping("/delete-task")
     public String deleteTask(@RequestParam String id){
 

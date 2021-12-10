@@ -138,13 +138,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="task : ${taskList}">
+                    <tr th:each="task : ${taskList}"> <!--th:attr="id=${'editTaskModal' + task.getId()}"-->
                         <td th:text="${task.getName()}"></td>
                         <td th:text="${task.getDescription()}"></td>
                         <td th:text="${task.getHours()}"></td>
                         <td >
                             <!--Load statuses-->
-                            <select class="form-select" aria-label="Default select example" id="statusSelection">
+                            <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="">
                                 <!--For each status: if it's equal to the task's status, set this option as selected-->
                                 <div th:each="status:${statusCategories}">
                                     <option th:if="${status != task.getStatus()}"
@@ -159,14 +159,14 @@
                        </td>
                        <td th:text="${task.getDeadline()}"></td>
                        <td>
-                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href="">
+                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" href=""> <!--  th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" -->
                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
                                <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                            </a>
 
                            <!-- editTaskModal -->
                             <!-- Issues:
-                             1. it shows the data from the first task no matter which task you open
+                             1. it shows and edits the data from the first task no matter which task you open
                              -->
                             <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
                                 <form id="editTask" method="POST" action="/edit-task">

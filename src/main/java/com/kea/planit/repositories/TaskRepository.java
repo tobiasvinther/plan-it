@@ -145,7 +145,6 @@ public class TaskRepository {
         }
     }
 
-
     public void deleteTask(int taskId) {
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM tasks WHERE id = ?");

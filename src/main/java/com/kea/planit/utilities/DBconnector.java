@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-//Author: Tobias
+//Author: Tobias Vinther
 
 public class DBconnector {
 
