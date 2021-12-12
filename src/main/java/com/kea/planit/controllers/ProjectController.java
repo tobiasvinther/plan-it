@@ -16,7 +16,7 @@ import java.sql.Date;
 
 @Controller
 public class ProjectController {
-    //Instance singleton
+    //Instance
     TaskRepository taskRepository = new TaskRepository();
     ProjectRepository projectRepository = new ProjectRepository();
     ProjectService projectService = new ProjectService();
@@ -31,7 +31,7 @@ public class ProjectController {
  */
     @GetMapping("/view-projects")
     public String viewProject(Model projectModel){
-        projectModel.addAttribute("projectList", projectRepository.viewProject(1));
+        projectModel.addAttribute("projectList", projectRepository.viewProject(7));
         return "view-projects";
 
     }
