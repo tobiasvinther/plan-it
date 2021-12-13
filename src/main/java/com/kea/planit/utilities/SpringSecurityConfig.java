@@ -50,14 +50,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity)throws Exception{
-        httpSecurity.authorizeRequests()
+        httpSecurity.csrf().ignoringAntMatchers("/add-task",
+                        "/add-project",
+                        "/add-subproject",
+                        "/edit-task",
+                        "/edit-subproject",
+                        "/edit-project")
+                .and()
+                .authorizeRequests()
                 .antMatchers("/","/login","/sign-up").permitAll()
                 .antMatchers("/view-projects",
                         "/view-tasks",
-                        "/view-subprojects",
-                        "/add-subproject",
-                        "/add-task",
-                        "/add-project").
+                        "/view-subprojects").
                 hasAnyAuthority("USER")
                 .and()
                 .formLogin()
