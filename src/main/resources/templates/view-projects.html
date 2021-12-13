@@ -42,6 +42,11 @@
             </div>
         </div>
     </nav>
+    <!-- greeting -->
+
+    <div class="container mt-5 py-5">
+        <h1>Your projects</h1>
+    </div>
 
     <!-- Project table -->
     <div class="container mt-5 py-5">
@@ -132,7 +137,12 @@
                                 </div>
                             <!--    </form>-->
                             </div>
-                        </td>
+
+                            <!-- view button -->
+                            <a class="btn btn-success flex-end" th:href="@{/view-subprojects(projectId=${project.getId()})}">View
+                                <i class="bi bi-caret-right-fill" style="font-size: 1rem; color: white;"></i>
+                            </a>
+
                     </tr>
                 </tbody>
             </table>
