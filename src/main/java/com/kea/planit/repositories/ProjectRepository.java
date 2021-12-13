@@ -10,20 +10,7 @@ import java.util.ArrayList;
 
 public class ProjectRepository {
 
-    //private static Object Date;
-    //private ProjectRepository projectRepository = new ProjectRepository();
 
-    //Dummi class
-    /*public static ArrayList<Project> getProjectList(){
-        ArrayList<Project> projectList = new ArrayList<>();
-        Project project1 = new Project(1,"Project 1", "Nice project1", 36,"Done", (java.util.Date) Date);
-        Project project2 = new Project(2,"Project 2", "Nice project2", 24,"Done", (java.util.Date) Date);
-        Project project3 = new Project(3,"Project 3", "Nice project3", 56,"Done", (java.util.Date) Date);
-        projectList.add(project1);
-        projectList.add(project2);
-        projectList.add(project3);
-        return projectList;
-    }*/
     public ArrayList<Project> viewProject(int projectOwner) {
         ArrayList<Project> projectList = new ArrayList<>();
         try {
@@ -48,6 +35,36 @@ public class ProjectRepository {
         return projectList;
     }
 
+    public Project fetchProjectById(int id) {
+        try {
+            //String selectStatement = "SELECT * FROM projects WHERE id = ?";
+
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("SELECT * FROM projects WHERE id = ?");
+
+            preparedStatement.setString(1, String.valueOf(id));
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Project fetchedProject = new Project(
+                        rs.getInt("id"), //id
+                        rs.getString("name"), //name
+                        rs.getString("status"), //status
+                        rs.getDate("deadline"), //deadline
+                        rs.getInt("project_owner") //projectOwner
+                );
+                System.out.println("Project (id: " + fetchedProject.getId() + ") fetched");
+                return fetchedProject;
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Something went wrong when fetching projects from database");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Projects not fetched, returned null"); //debug
+        return null;
+    }
+
     public void addToProjectList(Project newProject) {
 
         try {
@@ -65,39 +82,20 @@ public class ProjectRepository {
         }
     }
 
-    public void editTask0(Task taskToEdit) {
-
-        try {
-            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
-                    "UPDATE tasks SET name = ?, description = ?, hours = ?, deadline = ? WHERE task_owner = ?");
-            preparedStatement.setString(1, taskToEdit.getName());
-            preparedStatement.setString(2, taskToEdit.getDescription());
-            preparedStatement.setInt(3, taskToEdit.getHours());
-            //preparedStatement.setString(4, taskToEdit.getStatus());
-            preparedStatement.setDate(4, Date.valueOf("2022-12-12")); //test
-            preparedStatement.setInt(5, taskToEdit.getTaskOwner());
-            preparedStatement.executeUpdate();
-            System.out.println("Task edited");
-        } catch (SQLException e) {
-            System.out.println("Something went wrong when editing task");
-            e.printStackTrace();
-        }
-    }
-
     //todo: find out why it edits all tasks in subproject at once
-    public void editTask(Project editedProject) {
+    public void editProject(Project editedProject) {
 
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
                     "UPDATE projects SET name = ?, description = ?, hours = ?, deadline = ? WHERE id = ?");
             preparedStatement.setString(1, editedProject.getName());
-            //preparedStatement.setString(4, taskToEdit.getStatus());
+            //preparedStatement.setString(4, projectToEdit.getStatus());
             preparedStatement.setDate(2, Date.valueOf("2022-12-12")); //test because it's not working
             preparedStatement.setInt(3, editedProject.getId());
             preparedStatement.executeUpdate();
-            System.out.println("Task edited (id: " + editedProject.getId() + ")"); //debug
+            System.out.println("Project edited (id: " + editedProject.getId() + ")"); //debug
         } catch (SQLException e) {
-            System.out.println("Something went wrong when editing task");
+            System.out.println("Something went wrong when editing project");
             e.printStackTrace();
         }
     }
