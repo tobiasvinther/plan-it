@@ -161,7 +161,7 @@
                     </div>
 
                     <!-- view button -->
-                    <a class="btn btn-success flex-end" th:href="@{/view-tasks(subprojectId=${subproject.getId()})}">View
+                    <a class="btn btn-success flex-end" th:href="@{/view-tasks(subprojectId=${subproject.getId()}, projectId=${thisProjectId})}">View
                         <i class="bi bi-caret-right-fill" style="font-size: 1rem; color: white;"></i>
                     </a>
 

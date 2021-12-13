@@ -58,14 +58,28 @@
 
     <!-- Title and subproject select -->
     <div class="container mt-5 py-5">
-    <h1>Project title</h1>
+    <h1 th:text="${thisSubproject.getName()}"></h1>
         <div class="row justify-content-start">
             <div class="col-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option th:value="1" selected>Subproject 1</option>
-                    <option th:value="2">Subproject 2</option>
-                    <option th:value="3">Subproject 3</option>
+                <select class="form-select" aria-label="Default select example" id="subprojectSelection">
+                    <div th:each="subproject:${subprojectList}">
+                        <option th:value="${subproject.getName()}" th:text="${subproject.getName()}"></option>
+                    </div>
                 </select>
+
+                <!--
+                <ul class="list-unstyled">
+                    <div th:each="subproject:${subprojectList}">
+                        <li th:value="${subproject.getName()}" th:text="${subproject.getName()}" >
+                            <a th:href="@{/view-tasks(subprojectId=${subproject.getId()}, projectId=${thisProjectId})}"></a>
+                        </li>
+                    </div>
+                    <li data-value="value 1">Option 1</li>
+                    <li data-value="value 2">Option 2</li>
+                    <li data-value="value 3">Option 3</li>
+                </ul>
+                -->
+
             </div>
 
         </div>

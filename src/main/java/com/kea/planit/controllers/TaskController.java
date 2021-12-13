@@ -1,8 +1,11 @@
 package com.kea.planit.controllers;
 
 import com.kea.planit.models.Task;
+import com.kea.planit.repositories.SubprojectRepository;
 import com.kea.planit.repositories.TaskRepository;
+import com.kea.planit.services.AuthenticationService;
 import com.kea.planit.services.TaskService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import java.sql.Date;
 public class TaskController {
 
     TaskRepository taskRepository = new TaskRepository();
+    SubprojectRepository subprojectRepository = new SubprojectRepository();
 
     @GetMapping("/")
     public String index(){
@@ -24,11 +28,17 @@ public class TaskController {
     }
 
     @GetMapping("/view-tasks")
-    public String viewTasks(Model taskModel, @RequestParam String subprojectId){
+    public String viewTasks(Model taskModel, @RequestParam String subprojectId, @RequestParam String projectId){
 
         int parsedSubprojectId = Integer.parseInt(subprojectId);
+        int parsedProjectId = Integer.parseInt(projectId);
         //get list of tasks for selected subproject
         taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(parsedSubprojectId)); //hardcoded for testing
+
+        //new stuff
+        taskModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(parsedProjectId));
+        taskModel.addAttribute("thisProjectId", parsedProjectId);
+        taskModel.addAttribute("thisSubproject", subprojectRepository.fetchSubprojectById(parsedSubprojectId));
 
         //add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
@@ -56,6 +66,7 @@ public class TaskController {
         return "redirect:/view-tasks";
     }
 
+    /*
     @PostMapping("/edit-task0")
     public String editTask0(WebRequest userInput) {
 
@@ -72,6 +83,7 @@ public class TaskController {
         taskRepository.editTask(taskToEdit);
         return "redirect:/view-tasks";
     }
+     */
 
     @PostMapping("/edit-task")
     public String editTask(WebRequest userInput) {
