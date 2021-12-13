@@ -76,12 +76,12 @@
                         <!-- Issues:
                          1. it shows the data from the first task no matter which task you open
                          -->
-                            <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-                                <form id="editTask" method="POST" action="/edit-project">
+                            <div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+                                <form id="editProject" method="POST" action="/edit-project">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editTaskModalLabel">Edit project</h5>
+                                                <h5 class="modal-title" id="editProjectModalLabel">Edit project</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -108,8 +108,8 @@
 
                         <!--    delete button opens deleteProjectModal -->
                             <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" >
-                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
-                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
+                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete project"></span>
+                                <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete project"></i>
                             </a>
 
                         <!--    delete project modal -->
@@ -124,7 +124,7 @@
 
                                         <div class="modal-footer border-0 justify-content-center">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <!--    <input type=hidden name="deleteTaskId" id="deleteTaskId" th:value="${task.getId()}">-->
+                                        <!--    <input type=hidden name="deleteProjectId" id="deleteProjectId" th:value="${project.getId()}">-->
                                         <!--    <button type="submit" class="btn btn-danger">Delete</button>-->
                                             <a class="btn btn-danger" th:href="@{/delete-project(id=${project.getId()})}">Delete</a>
                                         </div>
