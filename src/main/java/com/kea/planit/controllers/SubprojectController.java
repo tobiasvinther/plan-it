@@ -21,6 +21,8 @@ public class SubprojectController {
         int parsedProjectId = Integer.parseInt(projectId);
         //get list of subproject for selected subproject
         subprojectModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(parsedProjectId)); //hardcoded for testing
+        subprojectModel.addAttribute("thisProjectId", parsedProjectId);
+        //subprojectModel.addAttribute("thisProject", subprojectRepository.fetchProjectById(parsedProjectId));
 
         /*add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
