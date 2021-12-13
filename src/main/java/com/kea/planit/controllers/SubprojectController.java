@@ -2,6 +2,7 @@ package com.kea.planit.controllers;
 
 import com.kea.planit.models.Subproject;
 import com.kea.planit.repositories.SubprojectRepository;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import java.sql.Date;
 
+@Controller
 public class SubprojectController {
 
     SubprojectRepository subprojectRepository = new SubprojectRepository();
@@ -35,7 +37,7 @@ public class SubprojectController {
         //create a new subproject based on user input
         Subproject newSubproject = new Subproject(
                 userInput.getParameter("newSubprojectName"),
-                Date.valueOf("2022-12-12"),
+                Date.valueOf("2022-12-12"), //hardcoded for testing purposes
                 1 //hardcoded for testing purposes
         );
 
