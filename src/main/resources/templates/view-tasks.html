@@ -10,7 +10,6 @@
     <title>Task List</title>
 </head>
 <!-- Author: Tobias Vinther -->
-<!-- perhaps move to a css -->
 <style>
     th {
         cursor: pointer;
@@ -42,7 +41,7 @@
                         <a href="/" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/view-tasks" class="nav-link">My projects</a>
+                        <a href="/view-projects" class="nav-link">My projects</a>
                     </li>
 
                     <li sec:authorize="isAuthenticated()">
@@ -164,16 +163,15 @@
                        </td>
                        <td th:text="${task.getDeadline()}"></td>
                        <td>
-                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editTaskModal" href=""> <!--  th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" -->
+                           <!-- when we target the modal, we also have to target the right id -->
+                           <a class="btn btn-secondary flex-end" data-bs-toggle="modal" th:attr="data-bs-target=${'#editTaskModal'+task.getId()}" href="">
                                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit task"></span>
                                <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                            </a>
 
                            <!-- editTaskModal -->
-                            <!-- Issues:
-                             1. it shows and edits the data from the first task no matter which task you open
-                             -->
-                            <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+                           <!-- when we create the modal we edit each modal's id to match the task's id, otherwise every edit button will refer to the same modal -->
+                            <div class="modal fade" th:attr="id=${'editTaskModal' + task.getId()}" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
                                 <form id="editTask" method="POST" action="/edit-task">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
