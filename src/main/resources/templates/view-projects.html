@@ -65,7 +65,7 @@
                                 <option th:if="${status != project.getStatus()}"
                                         th:value="${status}" th:text="${status}">
                                 </option>
-                                <option th:if="${status == task.getStatus()}"
+                                <option th:if="${status == project.getStatus()}"
                                         th:value="${status}" th:text="${status}"
                                         selected="selected">
                                 </option>
