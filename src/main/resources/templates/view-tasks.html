@@ -284,6 +284,12 @@
                                 <label for="newTaskDeadline" class="form-label">Deadline</label>
                                 <input type="date" class="form-control" name="newTaskDeadline" id="newTaskDeadline">
                             </div>
+                            <div>
+                                <input type=hidden name="editTasksubprojectId" id="editTasksubprojectId" th:value="${thisProjectId}">
+                            </div>
+                            <div>
+                                <input type=hidden name="editTaskprojectId" id="editTaskprojectId" th:value="${thisSubproject.getId()}">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

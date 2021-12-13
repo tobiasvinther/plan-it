@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.sql.Date;
 
 //Author: Tobias Vinther
@@ -49,7 +51,7 @@ public class TaskController {
     }
 
     @PostMapping("/add-task")
-    public String addTask(WebRequest userInput) {
+    public String addTask(WebRequest userInput, RedirectAttributes redirectAttributes) {
 
         //create a new task based on user input
         Task newTask = new Task(
@@ -63,7 +65,11 @@ public class TaskController {
 
         taskRepository.addToTaskList(newTask);
         System.out.println("Task added: " + userInput.getParameter("newTaskName"));
+
+        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("editTasksubprojectId"));
+        redirectAttributes.addAttribute("projectId", userInput.getParameter("editTaskProjectId"));
         return "redirect:/view-tasks";
+        //return "redirect:/view-tasks?subprojectId=" + userInput.getParameter("editTasksubprojectId") + "&projectId=" + userInput.getParameter("editTaskProjectId");
     }
 
     /*
@@ -101,7 +107,9 @@ public class TaskController {
         //send model task back to database
         taskRepository.editTask(editedTask); //debug
         System.out.println("Edited task id when fetched: " + editedTask.getId());
-        return "redirect:/view-tasks";
+        return "redirect:/view-tasks?subprojectId=" + userInput.getParameter("editTasksubprojectId") + "&projectId=" + userInput.getParameter("editTaskProjectId");
+        //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
+        ///view-tasks?subprojectId=4&projectId=8
     }
 
     //todo: finish this method
