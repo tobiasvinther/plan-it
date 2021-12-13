@@ -87,7 +87,7 @@ public class ProjectRepository {
 
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
-                    "UPDATE projects SET name = ?, description = ?, hours = ?, deadline = ? WHERE id = ?");
+                    "UPDATE projects SET name = ?, deadline = ? WHERE id = ?");
             preparedStatement.setString(1, editedProject.getName());
             //preparedStatement.setString(4, projectToEdit.getStatus());
             preparedStatement.setDate(2, Date.valueOf("2022-12-12")); //test because it's not working
