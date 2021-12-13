@@ -58,19 +58,20 @@
                 <tbody>
                     <tr th:each="project : ${projectList}">
                         <td th:text="${project.getName()}"></td>
-                        <!--Load statuses-->
-                        <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="" > <!--th:href="@{/change-status(id=${task.getId()})(updatedStatus=${status})}" -->
-                            <!--For each status: if it's equal to the task's status, set this option as selected-->
-                            <div th:each="status:${statusCategories}">
-                                <option th:if="${status != project.getStatus()}"
-                                        th:value="${status}" th:text="${status}">
-                                </option>
-                                <option th:if="${status == project.getStatus()}"
-                                        th:value="${status}" th:text="${status}"
-                                        selected="selected">
-                                </option>
-                            </div>
-                        </select>
+                        <td >
+                            <!--Load statuses-->
+                            <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="" > <!--th:href="@{/change-status(id=${task.getId()})(updatedStatus=${status})}" -->
+                                <!--For each status: if it's equal to the task's status, set this option as selected-->
+                                <div th:each="status:${statusCategories}">
+                                    <option th:if="${status != project.getStatus()}"
+                                            th:value="${status}" th:text="${status}">
+                                    </option>
+                                    <option th:if="${status == project.getStatus()}"
+                                            th:value="${status}" th:text="${status}"
+                                            selected="selected">
+                                    </option>
+                                </div>
+                            </select>
                         </td>
                         <td th:text="${project.getDeadline()}"></td>
                         <td>
