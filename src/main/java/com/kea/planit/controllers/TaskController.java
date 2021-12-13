@@ -24,15 +24,16 @@ public class TaskController {
     }
 
     @GetMapping("/view-tasks")
-    public String viewTasks(Model taskModel){
+    public String viewTasks(Model taskModel, @RequestParam String subprojectId){
 
+        int parsedSubprojectId = Integer.parseInt(subprojectId);
         //get list of tasks for selected subproject
-        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(5)); //hardcoded for testing
+        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(parsedSubprojectId)); //hardcoded for testing
 
         //add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
-        taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
-        taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
+        taskModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(parsedSubprojectId))); //hardcoded for testing
+        taskModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(parsedSubprojectId))); //hardcoded for testing
         taskModel.addAttribute("statusCategories", taskService.getStatusCategories());
         return "view-tasks";
     }

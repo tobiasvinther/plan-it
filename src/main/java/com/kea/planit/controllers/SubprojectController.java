@@ -16,10 +16,11 @@ public class SubprojectController {
     SubprojectRepository subprojectRepository = new SubprojectRepository();
 
     @GetMapping("/view-subprojects")
-    public String viewSubprojects(Model subprojectModel){
+    public String viewSubprojects(Model subprojectModel, @RequestParam String projectId){
 
+        int parsedProjectId = Integer.parseInt(projectId);
         //get list of subproject for selected subproject
-        subprojectModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(8)); //hardcoded for testing
+        subprojectModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(parsedProjectId)); //hardcoded for testing
 
         /*add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
