@@ -58,25 +58,31 @@
                 <tbody>
                     <tr th:each="project : ${projectList}">
                         <td th:text="${project.getName()}"></td>
-                        <td >
-                            <select class="form-select" aria-label="Default select example">
-                                <option th:value="1" selected>Pending</option>
-                                <option th:value="2">In progress</option>
-                                <option th:value="3">Done</option>
-                            </select>
+                        <!--Load statuses-->
+                        <select class="form-select" aria-label="Default select example" id="statusSelection" th:onchange="" > <!--th:href="@{/change-status(id=${task.getId()})(updatedStatus=${status})}" -->
+                            <!--For each status: if it's equal to the task's status, set this option as selected-->
+                            <div th:each="status:${statusCategories}">
+                                <option th:if="${status != project.getStatus()}"
+                                        th:value="${status}" th:text="${status}">
+                                </option>
+                                <option th:if="${status == task.getStatus()}"
+                                        th:value="${status}" th:text="${status}"
+                                        selected="selected">
+                                </option>
+                            </div>
+                        </select>
                         </td>
                         <td th:text="${project.getDeadline()}"></td>
                         <td>
-                            <a class="btn btn-secondary flex-end" data-bs-toggle="modal" data-bs-target="#editProjectModal" href="">
+                            <!-- when we target the modal, we also have to target the right id -->
+                            <a class="btn btn-secondary flex-end" data-bs-toggle="modal" th:attr="data-bs-target=${'#editProjectModal'+project.getId()}" href="">
                                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="edit project"></span>
                                 <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                             </a>
 
-                        <!-- editProjectModal -->
-                        <!-- Issues:
-                         1. it shows the data from the first task no matter which task you open
-                         -->
-                            <div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+                            <!-- editProjectModal -->
+                            <!-- when we create the modal we edit each modal's id to match the project's id, otherwise every edit button will refer to the same modal -->
+                            <div class="modal fade" th:attr="id=${'editProjectModal' + project.getId()}" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
                                 <form id="editProject" method="POST" action="/edit-project">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -87,7 +93,7 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="editProjectName" class="form-label">Project name</label>
-                                                    <input type="text" class="form-control" name="editTaskName" id="editProjectName" placeholder="Add a title" th:value="${project.getName()}">
+                                                    <input type="text" class="form-control" name="editProjectName" id="editProjectName" placeholder="Add a title" th:value="${project.getName()}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="editProjectDeadline" class="form-label">Deadline</label>
@@ -97,8 +103,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <!--    <button type="submit" class="btn btn-success">Save</button>-->
-                                            <!--    <a class="btn btn-success" th:href="@{/edit-task(id=${task.getId()})}">Save</a>-->
+                                                <!--<button type="submit" class="btn btn-success">Save</button>-->
+                                                <!--<a class="btn btn-success" th:href="@{/edit-project(id=${project.getId()})}">Save</a>-->
                                                 <button type="submit" class="btn btn-success">Save</button>
                                             </div>
                                         </div>
