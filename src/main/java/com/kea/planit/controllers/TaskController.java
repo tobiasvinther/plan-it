@@ -27,7 +27,7 @@ public class TaskController {
     public String viewTasks(Model taskModel){
 
         //get list of tasks for selected subproject
-        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(1)); //hardcoded for testing
+        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(5)); //hardcoded for testing
 
         //add the total hours and completion percentage to the model by using the service
         TaskService taskService = new TaskService();
