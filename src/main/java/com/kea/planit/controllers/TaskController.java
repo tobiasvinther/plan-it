@@ -1,5 +1,6 @@
 package com.kea.planit.controllers;
 
+import com.kea.planit.models.Subproject;
 import com.kea.planit.models.Task;
 import com.kea.planit.repositories.SubprojectRepository;
 import com.kea.planit.repositories.TaskRepository;
@@ -30,16 +31,16 @@ public class TaskController {
     }
 
     @GetMapping("/view-tasks")
-    public String viewTasks(Model taskModel, @RequestParam String subprojectId, @RequestParam String projectId){
+    public String viewTasks(Model taskModel, @RequestParam String subprojectId){
 
         int parsedSubprojectId = Integer.parseInt(subprojectId);
-        int parsedProjectId = Integer.parseInt(projectId);
         //get list of tasks for selected subproject
-        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(parsedSubprojectId)); //hardcoded for testing
+        taskModel.addAttribute("taskList", taskRepository.getTaskInThisSubproject(parsedSubprojectId));
+        Subproject thisSubproject = subprojectRepository.fetchSubprojectById(parsedSubprojectId);
 
         //new stuff
-        taskModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(parsedProjectId));
-        taskModel.addAttribute("thisProjectId", parsedProjectId);
+        taskModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(thisSubproject.getSubprojectOwner()));
+        taskModel.addAttribute("thisProjectId", thisSubproject.getSubprojectOwner());
         taskModel.addAttribute("thisSubproject", subprojectRepository.fetchSubprojectById(parsedSubprojectId));
 
         //add the total hours and completion percentage to the model by using the service
@@ -59,40 +60,23 @@ public class TaskController {
                 userInput.getParameter("newTaskDescription"),
                 Integer.parseInt(userInput.getParameter("newTaskHours")),
                 "Pending",
-                Date.valueOf("2022-12-12"),
-                1 //hardcoded for testing purposes
+                Date.valueOf("2022-12-12"),//hardcoded for testing purposes
+                //Integer.parseInt(userInput.getParameter("editTasksubprojectId"))
+                4 //harcoded for test
         );
 
         taskRepository.addToTaskList(newTask);
-        System.out.println("Task added: " + userInput.getParameter("newTaskName"));
+        System.out.println("Task add request sent to database: " + userInput.getParameter("newTaskName"));
 
-        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("editTasksubprojectId"));
-        redirectAttributes.addAttribute("projectId", userInput.getParameter("editTaskProjectId"));
-        return "redirect:/view-tasks";
-        //return "redirect:/view-tasks?subprojectId=" + userInput.getParameter("editTasksubprojectId") + "&projectId=" + userInput.getParameter("editTaskProjectId");
-    }
-
-    /*
-    @PostMapping("/edit-task0")
-    public String editTask0(WebRequest userInput) {
-
-        //edit task based on user input
-        Task taskToEdit = new Task(
-                userInput.getParameter("editTaskName"),
-                userInput.getParameter("editTaskDescription"),
-                Integer.parseInt(userInput.getParameter("editTaskHours")),
-                "Pending",
-                Date.valueOf("2022-12-12"),
-                1 //hardcoded for testing purposes
-        );
-
-        taskRepository.editTask(taskToEdit);
+        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
+        //redirectAttributes.addFlashAttribute("subprojectId", userInput.getParameter("editTasksubprojectId"));
+        //redirectAttributes.getFlashAttributes();
+        //redirectAttributes.addAttribute("projectId", userInput.getParameter("editTaskProjectId"));
         return "redirect:/view-tasks";
     }
-     */
 
     @PostMapping("/edit-task")
-    public String editTask(WebRequest userInput) {
+    public String editTask(WebRequest userInput, RedirectAttributes redirectAttributes) {
 
         //parse RequestParam and use it to fetch model of the task to edit
         int parsedId = Integer.parseInt(userInput.getParameter("editTaskId"));
@@ -105,9 +89,13 @@ public class TaskController {
         editedTask.setHours(Integer.parseInt(userInput.getParameter("editTaskHours")));
 
         //send model task back to database
-        taskRepository.editTask(editedTask); //debug
+        taskRepository.editTask(editedTask);
         System.out.println("Edited task id when fetched: " + editedTask.getId());
-        return "redirect:/view-tasks?subprojectId=" + userInput.getParameter("editTasksubprojectId") + "&projectId=" + userInput.getParameter("editTaskProjectId");
+
+        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("editTaskSubprojectId"));
+
+        return "redirect:/view-tasks";
+        //return "redirect:/view-tasks?subprojectId=" + userInput.getParameter("editTasksubprojectId") + "&projectId=" + userInput.getParameter("editTaskProjectId");
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
         ///view-tasks?subprojectId=4&projectId=8
     }
@@ -129,13 +117,15 @@ public class TaskController {
     }
 
     @GetMapping("/delete-task")
-    public String deleteTask(@RequestParam String id){
+    public String deleteTask(@RequestParam String id, @RequestParam String subprojectId, RedirectAttributes redirectAttributes){
 
         //parsing the id as an int since we are receiving it as a String
         int parsedId = Integer.parseInt(id);
 
         taskRepository.deleteTask(parsedId);
         System.out.println("Deleted task: " + parsedId);
+
+        redirectAttributes.addAttribute("subprojectId", subprojectId);
 
         return "redirect:/view-tasks";
     }

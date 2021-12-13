@@ -211,6 +211,9 @@
                                                     <input type="date" class="form-control" name="editTaskDeadline" id="editTaskDeadline" th:value="${task.getDeadline()}">
                                                 </div>
                                                 <div><input type=hidden name="editTaskId" id="editTaskId" th:value="${task.getId()}"></div>
+                                                <div>
+                                                    <input type=hidden name="editTaskSubprojectId" id="editTaskSubprojectId" th:value="${thisSubproject.getId()}">
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -224,13 +227,13 @@
                             </div>
 
                             <!-- delete button opens deleteTaskModal -->
-                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" >
+                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" th:attr="data-bs-target=${'#deleteTaskModal'+task.getId()}"  >
                                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></span>
                                 <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete task"></i>
                             </a>
 
                             <!-- delete task modal -->
-                            <div class="modal" id="deleteTaskModal" tabindex="-1" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
+                            <div class="modal" tabindex="-1" aria-labelledby="deleteTaskModalLabel" aria-hidden="true" th:attr="id=${'deleteTaskModal' + task.getId()}">
                                 <!--<form id="deleteWish" method="POST" action="/delete-task">-->
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -243,7 +246,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                             <!--<input type=hidden name="deleteTaskId" id="deleteTaskId" th:value="${task.getId()}">-->
                                             <!--<button type="submit" class="btn btn-danger">Delete</button>-->
-                                            <a class="btn btn-danger" th:href="@{/delete-task(id=${task.getId()})}">Delete</a>
+                                            <a class="btn btn-danger" th:href="@{/delete-task(id=${task.getId()}, subprojectId=${thisSubproject.getId()})}">Delete</a>
                                         </div>
                                     </div>
                                 </div>
@@ -285,10 +288,7 @@
                                 <input type="date" class="form-control" name="newTaskDeadline" id="newTaskDeadline">
                             </div>
                             <div>
-                                <input type=hidden name="editTasksubprojectId" id="editTasksubprojectId" th:value="${thisProjectId}">
-                            </div>
-                            <div>
-                                <input type=hidden name="editTaskprojectId" id="editTaskprojectId" th:value="${thisSubproject.getId()}">
+                                <input type=hidden name="newTasksubprojectId" id="newTasksubprojectId" th:value="${thisSubproject.getId()}">
                             </div>
                         </div>
                         <div class="modal-footer">
