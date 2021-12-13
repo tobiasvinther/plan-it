@@ -2,6 +2,7 @@ package com.kea.planit.models;
 
 import java.util.ArrayList;
 
+//Author: Jonatan Segal
 public class UserModel {
 
     private int id;

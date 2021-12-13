@@ -51,11 +51,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.authorizeRequests()
                 .antMatchers("/","/login","/sign-up").permitAll()
-                .antMatchers("/view-tasks").hasAnyAuthority("USER")
+                .antMatchers("/view-projects","/view-tasks","/view-subprojects").hasAnyAuthority("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/view-tasks")
+                .defaultSuccessUrl("/view-projects")
                 .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .and()

@@ -1,3 +1,4 @@
+//Author: Jonatan Segal
 $(document).ready(function (){
     $('button[type="submit"]').prop('disabled', true);
     $('#confirmPassword').prop('disabled', true);

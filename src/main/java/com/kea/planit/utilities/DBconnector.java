@@ -29,23 +29,4 @@ public class DBconnector {
         }
         return connection;
     }
-
-    public static Connection getConnection_old(){
-        if(connection != null){
-            return connection;
-        }
-
-        try(InputStream stream = new FileInputStream("src/main/resources/application.properties")){
-            Properties properties = new Properties();
-            properties.load(stream);
-            url = properties.getProperty("db.url");
-            user = properties.getProperty("db.username");
-            password = properties.getProperty("db.password");
-            connection = DriverManager.getConnection(url, user, password);
-
-        } catch (SQLException  | IOException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
 }

@@ -4,8 +4,10 @@ import com.kea.planit.models.Project;
 import com.kea.planit.models.Task;
 import com.kea.planit.repositories.ProjectRepository;
 import com.kea.planit.repositories.TaskRepository;
+import com.kea.planit.services.AuthenticationService;
 import com.kea.planit.services.ProjectService;
 import com.kea.planit.services.TaskService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +24,12 @@ public class ProjectController {
     ProjectRepository projectRepository = new ProjectRepository();
     ProjectService projectService = new ProjectService();
     TaskService taskService = new TaskService();
+    private AuthenticationService authService = new AuthenticationService();
 
-/*
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 
- */
     @GetMapping("/view-projects")
-    public String viewProject(Model projectModel){
-        projectModel.addAttribute("projectList", projectRepository.viewProject(7));
+    public String viewProject(Model projectModel, Authentication authentication){
+        projectModel.addAttribute("projectList", projectRepository.viewProject(authService.findUserId(authentication)));
         return "view-projects";
 
     }
