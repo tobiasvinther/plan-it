@@ -1,6 +1,7 @@
 package com.kea.planit.controllers;
 
 import com.kea.planit.models.Project;
+import com.kea.planit.models.Task;
 import com.kea.planit.repositories.ProjectRepository;
 import com.kea.planit.repositories.TaskRepository;
 import com.kea.planit.services.ProjectService;
@@ -50,6 +51,38 @@ public class ProjectController {
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
         return "redirect:/view-projects";
     }
+    @PostMapping("/edit-project0")
+    public String editTask0(WebRequest userInput) {
+
+        //edit task based on user input
+        Project ProjectToEdit = new Project(
+                userInput.getParameter("editProjectName"),
+                "Pending",
+                Date.valueOf("2022-12-12"),
+                1 //hardcoded for testing purposes
+        );
+
+        projectRepository.editProject(projectToEdit);
+        return "redirect:/view-tasks";
+    }
+
+    @PostMapping("/edit-project")
+    public String editProject(WebRequest userInput) {
+
+        //parse RequestParam and use it to fetch model of the task to edit
+        int parsedId = Integer.parseInt(userInput.getParameter("editProjectId"));
+        Task editedProject = projectRepository.fetchProjectById(parsedId);
+        System.out.println("Edited task id when fetched: " + editedProject.getId()); //debug
+
+        //edit task model based on user input
+        editedProject.setName(userInput.getParameter("editProjectName"));
+
+        //send model task back to database
+        taskRepository.editTask(editedProject); //debug
+        System.out.println("Edited task id when fetched: " + editedProject.getId());
+        return "redirect:/view-projects";
+    }
+
     @GetMapping("/delete-project")
     public String deleteTask(@RequestParam String id){
 

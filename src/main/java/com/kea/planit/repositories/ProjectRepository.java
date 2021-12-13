@@ -1,6 +1,7 @@
 package com.kea.planit.repositories;
 
 import com.kea.planit.models.Project;
+import com.kea.planit.models.Task;
 import com.kea.planit.utilities.DBconnector;
 
 import java.sql.*;
@@ -63,6 +64,44 @@ public class ProjectRepository {
             exception.printStackTrace();
         }
     }
+
+    public void editTask0(Task taskToEdit) {
+
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
+                    "UPDATE tasks SET name = ?, description = ?, hours = ?, deadline = ? WHERE task_owner = ?");
+            preparedStatement.setString(1, taskToEdit.getName());
+            preparedStatement.setString(2, taskToEdit.getDescription());
+            preparedStatement.setInt(3, taskToEdit.getHours());
+            //preparedStatement.setString(4, taskToEdit.getStatus());
+            preparedStatement.setDate(4, Date.valueOf("2022-12-12")); //test
+            preparedStatement.setInt(5, taskToEdit.getTaskOwner());
+            preparedStatement.executeUpdate();
+            System.out.println("Task edited");
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when editing task");
+            e.printStackTrace();
+        }
+    }
+
+    //todo: find out why it edits all tasks in subproject at once
+    public void editTask(Project editedProject) {
+
+        try {
+            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
+                    "UPDATE projects SET name = ?, description = ?, hours = ?, deadline = ? WHERE id = ?");
+            preparedStatement.setString(1, editedProject.getName());
+            //preparedStatement.setString(4, taskToEdit.getStatus());
+            preparedStatement.setDate(2, Date.valueOf("2022-12-12")); //test because it's not working
+            preparedStatement.setInt(3, editedProject.getId());
+            preparedStatement.executeUpdate();
+            System.out.println("Task edited (id: " + editedProject.getId() + ")"); //debug
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when editing task");
+            e.printStackTrace();
+        }
+    }
+
     public void deleteProject(int projectId) {
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("DELETE FROM projects WHERE id = ?");
