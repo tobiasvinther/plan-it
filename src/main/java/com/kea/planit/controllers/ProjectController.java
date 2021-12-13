@@ -66,7 +66,7 @@ public class ProjectController {
         return "redirect:/view-projects";
     }
 
-    @GetMapping("/change-status")
+    @GetMapping("/change-project-status")
     public String changeStatus(@RequestParam String id, @RequestParam String updatedStatus){
 
         //parsing the id as an int since we are receiving it as a String
