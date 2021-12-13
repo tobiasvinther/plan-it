@@ -51,7 +51,7 @@ public class ProjectController {
         //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
         return "redirect:/view-projects";
     }
-    @PostMapping("/edit-project0")
+    /*@PostMapping("/edit-project0")
     public String editTask0(WebRequest userInput) {
 
         //edit task based on user input
@@ -66,7 +66,7 @@ public class ProjectController {
         return "redirect:/view-tasks";
     }
 
-    @PostMapping("/edit-project")
+    /*@PostMapping("/edit-project")
     public String editProject(WebRequest userInput) {
 
         //parse RequestParam and use it to fetch model of the task to edit
@@ -81,7 +81,7 @@ public class ProjectController {
         taskRepository.editTask(editedProject); //debug
         System.out.println("Edited task id when fetched: " + editedProject.getId());
         return "redirect:/view-projects";
-    }
+    }*/
 
     @GetMapping("/delete-project")
     public String deleteTask(@RequestParam String id){
