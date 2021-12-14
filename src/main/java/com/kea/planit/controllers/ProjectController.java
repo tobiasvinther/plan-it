@@ -28,23 +28,26 @@ public class ProjectController {
     @GetMapping("/view-projects")
     public String viewProject(Model projectModel, Authentication authentication){
         projectModel.addAttribute("projectList", projectRepository.viewProject(authService.findUserId(authentication)));
+        //projectModel.addAttribute("thisUser", authService.findUserId(authentication));
+        TaskService taskService = new TaskService();
+        projectModel.addAttribute("statusCategories", taskService.getStatusCategories());
         return "view-projects";
 
     }
     @PostMapping("/add-project")
-    public String addProject(WebRequest userInput, RedirectAttributes redirectAttributes) {
+    public String addProject(WebRequest userInput, RedirectAttributes redirectAttributes, Authentication authentication) {
         //Create a new project
         Project newProject = new Project(
                 userInput.getParameter("newProjectName"),
                 "Pending",
                 Date.valueOf("2022-12-12"),
-                1
+                authService.findUserId(authentication)
         );
 
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
 
-        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
+        //redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
         return "redirect:/view-projects";
     }
 
@@ -84,7 +87,7 @@ public class ProjectController {
     }
 
     @GetMapping("/delete-project")
-    public String deleteProject(@RequestParam String id, @RequestParam String ProjectId, RedirectAttributes redirectAttributes){
+    public String deleteProject(@RequestParam String id){
 
         //parsing the id as an int since we are receiving it as a String
         int parsedId = Integer.parseInt(id);
@@ -92,7 +95,7 @@ public class ProjectController {
         projectRepository.deleteProject(parsedId);
         System.out.println("Deleted project: " + parsedId);
 
-        redirectAttributes.addAttribute("projectId", ProjectId);
+        //redirectAttributes.addAttribute("projectId", ProjectId);
 
         return "redirect:/view-projects";
     }

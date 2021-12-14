@@ -54,7 +54,7 @@
     </div>
 
     <!-- Project table -->
-    <div class="container mt-5 py-5">
+    <div class="container">
         <div >
             <table id="projectTable" class="table table-hover table-bordered table-light">
                 <thead>
@@ -124,13 +124,13 @@
                             </div>
 
                         <!--    delete button opens deleteProjectModal -->
-                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteProjectModal" >
+                            <a class="btn btn-danger flex-end" data-bs-toggle="modal" th:attr="data-bs-target=${'#deleteProjectModal'+project.getId()}" >
                                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete project"></span>
                                 <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete project"></i>
                             </a>
 
                         <!--    delete project modal -->
-                            <div class="modal" id="deleteProjectModal" tabindex="-1" aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+                            <div class="modal" tabindex="-1" aria-labelledby="deleteProjectModalLabel" aria-hidden="true" th:attr="id=${'deleteProjectModal' + project.getId()}">
                             <!--    <form id="deleteProject" method="POST" action="/delete-project">-->
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
