@@ -61,8 +61,8 @@ public class TaskController {
                 Integer.parseInt(userInput.getParameter("newTaskHours")),
                 "Pending",
                 Date.valueOf("2022-12-12"),//hardcoded for testing purposes
-                //Integer.parseInt(userInput.getParameter("editTasksubprojectId"))
-                4 //harcoded for test
+                Integer.parseInt(userInput.getParameter("newTasksubprojectId"))
+                //4 //harcoded for test
         );
 
         taskRepository.addToTaskList(newTask);

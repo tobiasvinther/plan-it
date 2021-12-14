@@ -57,7 +57,7 @@
 
 <!-- Title -->
 <div class="container mt-5 py-5">
-    <h1>Project title</h1>
+    <h1 th:text="${thisProject.getName()}"></h1>
     <!--
     <div class="row justify-content-start">
         <div class="col-3">
@@ -103,7 +103,7 @@
                         <i class="bi bi-pencil" style="font-size: 1rem; color: white;"></i>
                     </a>
 
-                    <!-- editTaskModal -->
+                    <!-- editSubprojectkModal -->
                     <!-- when we create the modal we edit each modal's id to match the task's id, otherwise every edit button will refer to the same modal -->
                     <div class="modal fade" th:attr="id=${'editSubprojectModal' + subproject.getId()}" tabindex="-1" aria-labelledby="editSubprojectModalLabel" aria-hidden="true">
                         <form id="editSubproject" method="POST" action="/edit-subproject">
@@ -122,7 +122,12 @@
                                             <label for="editSubprojectDeadline" class="form-label">Deadline</label>
                                             <input type="date" class="form-control" name="editSubprojectDeadline" id="editSubprojectDeadline" th:value="${subproject.getDeadline()}">
                                         </div>
-                                        <div><input type=hidden name="editSubprojectId" id="editSubprojectId" th:value="${subproject.getId()}"></div>
+                                        <div>
+                                            <input type=hidden name="editSubprojectId" id="editSubprojectId" th:value="${subproject.getId()}">
+                                        </div>
+                                        <div>
+                                            <input type=hidden name="editSubprojectProjectId" id="editSubprojectProjectId" th:value="${thisProjectId}">
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -133,31 +138,27 @@
                         </form>
                     </div>
 
-                    <!-- delete button opens deleteTaskModal -->
+                    <!-- delete button opens deleteSubprojectModal -->
                     <a class="btn btn-danger flex-end" data-bs-toggle="modal" data-bs-target="#deleteSubprojectModal" >
                         <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete subproject"></span>
                         <i class="bi bi-trash" style="font-size: 1rem; color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="delete subproject"></i>
                     </a>
 
-                    <!-- delete task modal -->
+                    <!-- delete subporject modal -->
                     <div class="modal" id="deleteSubprojectModal" tabindex="-1" aria-labelledby="deleteSubprojectModalLabel" aria-hidden="true">
-                        <!--<form id="deleteWish" method="POST" action="/delete-task">-->
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header border-0 text-center">
                                     <h5 class="modal-title w-100" id="deleteSubprojectModalLabel">Delete subproject?</h5>
-                                    <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
                                 </div>
 
                                 <div class="modal-footer border-0 justify-content-center">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <!--<input type=hidden name="deleteTaskId" id="deleteTaskId" th:value="${task.getId()}">-->
-                                    <!--<button type="submit" class="btn btn-danger">Delete</button>-->
-                                    <a class="btn btn-danger" th:href="@{/delete-subproject(id=${subproject.getId()})}">Delete</a>
+
+                                    <a class="btn btn-danger" th:href="@{/delete-subproject(id=${subproject.getId()}, projectId=${thisProjectId})}">Delete</a>
                                 </div>
                             </div>
                         </div>
-                        <!--</form>-->
                     </div>
 
                     <!-- view button -->
@@ -191,6 +192,9 @@
                         <div class="mb-3">
                             <label for="newSubprojectDeadline" class="form-label">Deadline</label>
                             <input type="date" class="form-control" name="newSubprojectDeadline" id="newSubprojectDeadline">
+                        </div>
+                        <div>
+                            <input type=hidden name="newSubprojectProjectId" id="newSubprojectProjectId" th:value="${thisProjectId}">
                         </div>
                     </div>
                     <div class="modal-footer">
