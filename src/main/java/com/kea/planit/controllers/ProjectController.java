@@ -44,7 +44,7 @@ public class ProjectController {
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
 
-        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"))
+        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
         return "redirect:/view-projects";
     }
 
