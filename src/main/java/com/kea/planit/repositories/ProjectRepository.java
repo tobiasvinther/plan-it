@@ -82,7 +82,6 @@ public class ProjectRepository {
         }
     }
 
-    //todo: find out why it edits all tasks in subproject at once
     public void editProject(Project editedProject) {
 
         try {
