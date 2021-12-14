@@ -62,7 +62,7 @@ public class ProjectController {
         //send model project back to database
         projectRepository.editProject(editedProject); //debug
         System.out.println("Edited project id when fetched: " + editedProject.getId());
-        //OBS. lidt i tvivl om paramName editProjectId
+
         redirectAttributes.addAttribute("projectId", userInput.getParameter("editProjectId"));
 
         return "redirect:/view-projects";
