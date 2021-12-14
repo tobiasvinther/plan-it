@@ -32,7 +32,8 @@ public class ProjectController {
 
     }
     @PostMapping("/add-project")
-    public String addProject(WebRequest userInput) {
+    public String addProject(WebRequest userInput, RedirectAttributes redirectAttributes) {
+        //Create a new project
         Project newProject = new Project(
                 userInput.getParameter("newProjectName"),
                 "Pending",
@@ -42,7 +43,8 @@ public class ProjectController {
 
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
-        //return "redirect:/view-all-wishes?wishlist_id=" + userInput.getParameter("wishlist_id");
+
+        redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"))
         return "redirect:/view-projects";
     }
 
