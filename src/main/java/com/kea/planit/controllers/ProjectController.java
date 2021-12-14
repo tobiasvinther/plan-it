@@ -14,16 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 
 @Controller
 public class ProjectController {
     //Instance
-    TaskRepository taskRepository = new TaskRepository();
     ProjectRepository projectRepository = new ProjectRepository();
-    ProjectService projectService = new ProjectService();
-    TaskService taskService = new TaskService();
     private AuthenticationService authService = new AuthenticationService();
 
 
@@ -35,7 +33,6 @@ public class ProjectController {
     }
     @PostMapping("/add-project")
     public String addProject(WebRequest userInput) {
-        //create a new project
         Project newProject = new Project(
                 userInput.getParameter("newProjectName"),
                 "Pending",
@@ -50,19 +47,22 @@ public class ProjectController {
     }
 
     @PostMapping("/edit-project")
-    public String editProject(WebRequest userInput) {
+    public String editProject(WebRequest userInput, RedirectAttributes redirectAttributes) {
 
-        //parse RequestParam and use it to fetch model of the task to edit
+        //parse RequestParam and use it to fetch model of the project to edit
         int parsedId = Integer.parseInt(userInput.getParameter("editProjectId"));
         Project editedProject = projectRepository.fetchProjectById(parsedId);
-        System.out.println("Edited task id when fetched: " + editedProject.getId()); //debug
+        System.out.println("Edited project id when fetched: " + editedProject.getId()); //debug
 
-        //edit task model based on user input
+        //edit project model based on user input
         editedProject.setName(userInput.getParameter("editProjectName"));
 
-        //send model task back to database
+        //send model project back to database
         projectRepository.editProject(editedProject); //debug
-        System.out.println("Edited task id when fetched: " + editedProject.getId());
+        System.out.println("Edited project id when fetched: " + editedProject.getId());
+        //OBS. lidt i tvivl om paramName editProjectId
+        redirectAttributes.addAttribute("projectId", userInput.getParameter("editProjectId"));
+
         return "redirect:/view-projects";
     }
 
@@ -82,13 +82,15 @@ public class ProjectController {
     }
 
     @GetMapping("/delete-project")
-    public String deleteTask(@RequestParam String id){
+    public String deleteProject(@RequestParam String id, @RequestParam String ProjectId, RedirectAttributes redirectAttributes){
 
         //parsing the id as an int since we are receiving it as a String
         int parsedId = Integer.parseInt(id);
 
         projectRepository.deleteProject(parsedId);
         System.out.println("Deleted project: " + parsedId);
+
+        redirectAttributes.addAttribute("projectId", ProjectId);
 
         return "redirect:/view-projects";
     }
