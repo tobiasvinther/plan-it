@@ -39,7 +39,6 @@ public class ProjectRepository {
 
     public Project fetchProjectById(int id) {
         try {
-            //String selectStatement = "SELECT * FROM projects WHERE id = ?";
 
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("SELECT * FROM projects WHERE id = ?");
 
@@ -72,7 +71,6 @@ public class ProjectRepository {
         try {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("INSERT INTO projects VALUES (default,?,?,?,?)");
             preparedStatement.setString(1, newProject.getName());
-            //preparedStatement.setDate(3, (Date) newProject.getDeadline());
             preparedStatement.setDate(2, Date.valueOf("2022-12-12")); //test
             preparedStatement.setInt(3, newProject.getProjectOwner());
             preparedStatement.setString(4, "Pending");
@@ -90,11 +88,10 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
                     "UPDATE projects SET name = ?, deadline = ? WHERE id = ?");
             preparedStatement.setString(1, editedProject.getName());
-            //preparedStatement.setString(4, projectToEdit.getStatus());
-            preparedStatement.setDate(2, Date.valueOf("2022-12-12")); //test because it's not working
+            preparedStatement.setDate(2, Date.valueOf("2022-12-12"));
             preparedStatement.setInt(3, editedProject.getId());
             preparedStatement.executeUpdate();
-            System.out.println("Project edited (id: " + editedProject.getId() + ")"); //debug
+            System.out.println("Project edited (id: " + editedProject.getId() + ")");
         } catch (SQLException e) {
             System.out.println("Something went wrong when editing project");
             e.printStackTrace();

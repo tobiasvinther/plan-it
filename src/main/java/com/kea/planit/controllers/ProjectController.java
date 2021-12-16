@@ -46,7 +46,6 @@ public class ProjectController {
         projectRepository.addToProjectList(newProject);
         System.out.println("Project added: " + userInput.getParameter("newProjectName"));
 
-        //redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
         return "redirect:/view-projects";
     }
 
@@ -93,8 +92,6 @@ public class ProjectController {
 
         projectRepository.deleteProject(parsedId);
         System.out.println("Deleted project: " + parsedId);
-
-        //redirectAttributes.addAttribute("projectId", ProjectId);
 
         return "redirect:/view-projects";
     }
