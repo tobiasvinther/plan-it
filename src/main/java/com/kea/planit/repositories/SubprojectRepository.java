@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Author: Tobias Vinther
+
 public class SubprojectRepository {
 
     public ArrayList<Subproject> getSubprojectsInThisProject(int subprojectOwner) {
@@ -31,15 +33,13 @@ public class SubprojectRepository {
             System.out.println("Something went wrong when fetching subprojects from database");
             System.out.println(e.getMessage());
         }
-        //todo: why does this fire three times?
+
         System.out.println("Returned subproject list"); //debug
         return subprojectList;
     }
 
-    //NOT FINISHED
     public Subproject fetchSubprojectById(int id) {
         try {
-            //String selectStatement = "SELECT * FROM tasks WHERE id = ?";
 
             PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement("SELECT * FROM subprojects WHERE id = ?");
 

@@ -3,6 +3,8 @@ package com.kea.planit.models;
 import java.time.LocalDate;
 import java.util.Date;
 
+//Author: Thony Dyreborg-Kragh
+
 public class Project {
 
     private int id;

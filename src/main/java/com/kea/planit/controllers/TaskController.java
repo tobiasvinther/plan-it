@@ -69,9 +69,7 @@ public class TaskController {
         System.out.println("Task add request sent to database: " + userInput.getParameter("newTaskName"));
 
         redirectAttributes.addAttribute("subprojectId", userInput.getParameter("newTasksubprojectId"));
-        //redirectAttributes.addFlashAttribute("subprojectId", userInput.getParameter("editTasksubprojectId"));
-        //redirectAttributes.getFlashAttributes();
-        //redirectAttributes.addAttribute("projectId", userInput.getParameter("editTaskProjectId"));
+
         return "redirect:/view-tasks";
     }
 
@@ -129,15 +127,5 @@ public class TaskController {
 
         return "redirect:/view-tasks";
     }
-
-    /*
-    @PostMapping("/delete-task")
-    public String deleteTask(WebRequest userInput){
-        taskRepository.deleteTask(Integer.parseInt(userInput.getParameter("deleteTaskId")));
-
-        return "redirect:/view-tasks";
-    }
-
-     */
 
 }

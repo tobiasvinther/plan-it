@@ -42,12 +42,11 @@ public class TaskRepository {
             System.out.println("Something went wrong when fetching tasks from database");
             System.out.println(e.getMessage());
         }
-        //todo: why does this fire three times?
+
         System.out.println("Returned task list"); //debug
         return taskList;
     }
 
-    //NOT FINISHED
     public Task fetchTaskById(int id) {
         try {
             //String selectStatement = "SELECT * FROM tasks WHERE id = ?";
@@ -103,25 +102,6 @@ public class TaskRepository {
         } catch(SQLException exception) {
             System.out.println("Something went wrong when adding task to database");
             exception.printStackTrace();
-        }
-    }
-
-    public void editTask0(Task taskToEdit) {
-
-        try {
-            PreparedStatement preparedStatement = DBconnector.getConnection().prepareStatement(
-                    "UPDATE tasks SET name = ?, description = ?, hours = ?, deadline = ? WHERE task_owner = ?");
-            preparedStatement.setString(1, taskToEdit.getName());
-            preparedStatement.setString(2, taskToEdit.getDescription());
-            preparedStatement.setInt(3, taskToEdit.getHours());
-            //preparedStatement.setString(4, taskToEdit.getStatus());
-            preparedStatement.setDate(4, Date.valueOf("2022-12-12")); //test
-            preparedStatement.setInt(5, taskToEdit.getTaskOwner());
-            preparedStatement.executeUpdate();
-            System.out.println("Task edited");
-        } catch (SQLException e) {
-            System.out.println("Something went wrong when editing task");
-            e.printStackTrace();
         }
     }
 

@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.sql.Date;
+
+//Author: Tobias Vinther
 
 @Controller
 public class SubprojectController {
@@ -27,14 +28,7 @@ public class SubprojectController {
         subprojectModel.addAttribute("subprojectList", subprojectRepository.getSubprojectsInThisProject(parsedProjectId));
         subprojectModel.addAttribute("thisProjectId", parsedProjectId);
         subprojectModel.addAttribute("thisProject", projectRepository.fetchProjectById(parsedProjectId));
-        //subprojectModel.addAttribute("thisProject", subprojectRepository.fetchProjectById(parsedProjectId));
 
-        /*add the total hours and completion percentage to the model by using the service
-        TaskService taskService = new TaskService();
-        subprojectModel.addAttribute("totalHours", taskService.calculateHours(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
-        subprojectModel.addAttribute("completionPercentage", taskService.calculateCompletionPercentage(taskRepository.getTaskInThisSubproject(1))); //hardcoded for testing
-        subprojectModel.addAttribute("statusCategories", taskService.getStatusCategories());
-         */
         return "view-subprojects";
     }
 

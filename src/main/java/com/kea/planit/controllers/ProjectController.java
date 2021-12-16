@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 
+//Author: Thony Dyreborg-Kragh
+
 @Controller
 public class ProjectController {
     //Instance

@@ -8,6 +8,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+//Author: Thony Dyreborg-Kragh
+
 public class ProjectRepository {
 
 
