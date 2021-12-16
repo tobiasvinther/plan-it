@@ -2,9 +2,6 @@ package com.kea.planit.repositories;
 
 import com.kea.planit.models.UserModel;
 import com.kea.planit.utilities.DBconnector;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Author: Jonatan Segal
 @Repository
 public class UserRepository {
 
